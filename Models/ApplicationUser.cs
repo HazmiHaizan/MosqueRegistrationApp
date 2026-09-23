@@ -9,6 +9,9 @@ namespace MosqueRegistrationApp.Models
         public string CurrentAddress { get; set; }
         public string MaritalStatus { get; set; }
         public int ResidencyDurationYears { get; set; }
-        public string? ProofOfResidencyImagePath { get; set; }
+        public string ProofOfResidencyImagePath { get; set; }
+
+        // New field: Pending, Approved, or Rejected
+        public string ApprovalStatus { get; set; } = "Pending";
     }
 }

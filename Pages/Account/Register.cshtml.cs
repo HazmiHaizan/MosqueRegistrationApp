@@ -65,7 +65,8 @@ namespace MosqueRegistrationApp.Pages.Account
                 CurrentAddress = Input.CurrentAddress,
                 MaritalStatus = Input.MaritalStatus,
                 ResidencyDurationYears = Input.ResidencyDurationYears,
-                ProofOfResidencyImagePath = imagePath
+                ProofOfResidencyImagePath = imagePath,
+                ApprovalStatus = "Pending" // Explicitly set default status
             };
 
             var result = await _userManager.CreateAsync(user, Input.Password);

@@ -1,70 +1,59 @@
 @page
 @model MosqueRegistrationApp.Pages.Admin.DashboardModel
-@{
-    ViewData["Title"] = "Admin Dashboard";
-}
+@{ ViewData["Title"] = "Admin Dashboard"; }
 
-<h2 class="mb-4">Admin Dashboard</h2>
-
-<div class="row">
-    <!-- Left Column: Admin Profile -->
-    <div class="col-md-4">
-        @if (Model.CurrentUser != null)
+<h2>Admin Portal - Registration Approvals</h2>
+<table class="table table-bordered table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>IC Number</th>
+            <th>Address</th>
+            <th>Proof File</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.RegisteredUsers)
         {
-            <div class="card p-3 mb-4 shadow-sm">
-                <h4>My Admin Profile</h4>
-                <hr />
-                <p><strong>Full Name:</strong> @Model.CurrentUser.FullName</p>
-                <p><strong>IC Number:</strong> @Model.CurrentUser.IcNumber</p>
-                <p><strong>Address:</strong> @Model.CurrentUser.CurrentAddress</p>
-            </div>
-        }
-    </div>
-
-    <!-- Right Column: Registered Members Table & Actions -->
-    <div class="col-md-8">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3>All Registered Members</h3>
-            <a asp-page="/Admin/CreateUser" class="btn btn-primary btn-sm">+ Add New Member</a>
-        </div>
-
-        <table class="table table-bordered table-striped align-middle">
-            <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>IC Number</th>
-                    <th>Address</th>
-                    <th>Status</th>
-                    <th>Proof File</th>
-                    <th style="width: 140px;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.RegisteredUsers != null)
-                {
-                    @foreach (var user in Model.RegisteredUsers)
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.IcNumber</td>
+                <td>@user.CurrentAddress</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
                     {
-                        <tr>
-                            <td>@user.FullName</td>
-                            <td>@user.IcNumber</td>
-                            <td>@user.CurrentAddress</td>
-                            <td>@user.MaritalStatus</td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
-                                {
-                                    <a href="@user.ProofOfResidencyImagePath" target="_blank">View File</a>
-                                }
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a asp-page="/Admin/EditUser" asp-route-id="@user.Id" class="btn btn-warning">Edit</a>
-                                    <a asp-page="/Admin/DeleteUser" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
+                        <a href="@user.ProofOfResidencyImagePath" target="_blank">View Proof</a>
                     }
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+                </td>
+                <td>
+                    @if (user.ApprovalStatus == "Approved")
+                    {
+                        <span class="badge bg-success">Approved</span>
+                    }
+                    else if (user.ApprovalStatus == "Rejected")
+                    {
+                        <span class="badge bg-danger">Rejected</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <input type="hidden" name="status" value="Approved" />
+                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+                    <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <input type="hidden" name="status" value="Rejected" />
+                        <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -8,7 +8,6 @@ using MosqueRegistrationApp.Models;
 namespace MosqueRegistrationApp.Pages.User
 {
     [Authorize]
-    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
     public class DashboardModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -23,9 +22,7 @@ namespace MosqueRegistrationApp.Pages.User
         public async Task<IActionResult> OnGetAsync()
         {
             CurrentUser = await _userManager.GetUserAsync(User);
-            if (CurrentUser == null){
-                return RedirectToPage("/Account/Login");
-            }
+            if (CurrentUser == null) return NotFound();
             return Page();
         }
     }
