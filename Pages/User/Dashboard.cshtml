@@ -1,0 +1,28 @@
+@page
+@model MosqueRegistrationApp.Pages.User.DashboardModel
+@{ ViewData["Title"] = "User Dashboard"; }
+
+<h2>My Profile Information</h2>
+
+@if (Model.CurrentUser != null)
+{
+    <div class="card p-3">
+        <p><strong>Full Name:</strong> @Model.CurrentUser.FullName</p>
+        <p><strong>IC Number:</strong> @Model.CurrentUser.IcNumber</p>
+        <p><strong>Address:</strong> @Model.CurrentUser.CurrentAddress</p>
+        <p><strong>Marital Status:</strong> @Model.CurrentUser.MaritalStatus</p>
+        <p><strong>Residency Duration:</strong> @Model.CurrentUser.ResidencyDurationYears years</p>
+        <p><strong>Proof of Residency:</strong></p>
+        @if (!string.IsNullOrEmpty(Model.CurrentUser.ProofOfResidencyImagePath))
+        {
+            <img src="@Model.CurrentUser.ProofOfResidencyImagePath" alt="Proof" style="max-width: 300px; border: 1px solid #ccc;" />
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        Unable to load user profile. Please <a asp-page="/Account/Login">login again</a>.
+    </div>
+}
+

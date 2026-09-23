@@ -1,0 +1,19 @@
+@page
+@model MosqueRegistrationApp.Pages.Admin.CreateUserModel
+@{ ViewData["Title"] = "Add New Member"; }
+
+<h2>Add New Member</h2>
+<form method="post" enctype="multipart/form-data" class="mt-3" style="max-width: 600px;">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-2"><label>Username</label><input asp-for="Input.Username" class="form-control" required /></div>
+    <div class="mb-2"><label>Password</label><input asp-for="Input.Password" type="password" class="form-control" required /></div>
+    <div class="mb-2"><label>Full Name</label><input asp-for="Input.FullName" class="form-control" required /></div>
+    <div class="mb-2"><label>IC Number</label><input asp-for="Input.IcNumber" class="form-control" required /></div>
+    <div class="mb-2"><label>Current Address</label><textarea asp-for="Input.CurrentAddress" class="form-control" required></textarea></div>
+    <div class="mb-2"><label>Marital Status</label><input asp-for="Input.MaritalStatus" class="form-control" required /></div>
+    <div class="mb-2"><label>Residency Duration (Years)</label><input asp-for="Input.ResidencyDurationYears" type="number" class="form-control" required /></div>
+    <div class="mb-2"><label>Proof of Residency (Image Upload)</label><input asp-for="Input.ProofOfResidency" type="file" class="form-control" /></div>
+    <br />
+    <button type="submit" class="btn btn-success">Create Member</button>
+    <a asp-page="/Admin/Dashboard" class="btn btn-secondary">Cancel</a>
+</form>

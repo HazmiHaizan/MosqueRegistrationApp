@@ -1,0 +1,15 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4">Welcome to Mosque Registration Portal</h1>
+    <p class="lead">Please log in or register your account below.</p>
+
+    <div class="mt-4">
+        <a class="btn btn-primary btn-lg me-2" asp-page="/Account/Login">Login</a>
+        <a class="btn btn-outline-secondary btn-lg" asp-page="/Account/Register">Register Account</a>
+    </div>
+</div>
