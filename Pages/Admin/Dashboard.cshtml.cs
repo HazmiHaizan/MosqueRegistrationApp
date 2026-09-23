@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,31 @@ namespace MosqueRegistrationApp.Pages.Admin
 
         public IList<ApplicationUser> RegisteredUsers { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string StatusFilter { get; set; }
+
         public async Task OnGetAsync()
         {
-            RegisteredUsers = await _context.Users.ToListAsync();
+            IQueryable<ApplicationUser> query = _context.Users;
+
+            // Apply Keyword Search (Full Name or IC Number)
+            if (!string.IsNullOrWhiteSpace(SearchTerm))
+            {
+                query = query.Where(u => 
+                    (u.FullName != null && u.FullName.Contains(SearchTerm)) || 
+                    (u.IcNumber != null && u.IcNumber.Contains(SearchTerm)));
+            }
+
+            // Apply Approval Status Filter
+            if (!string.IsNullOrWhiteSpace(StatusFilter) && StatusFilter != "All")
+            {
+                query = query.Where(u => u.ApprovalStatus == StatusFilter);
+            }
+
+            RegisteredUsers = await query.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostUpdateStatusAsync(string userId, string status)
@@ -34,7 +57,7 @@ namespace MosqueRegistrationApp.Pages.Admin
                 user.ApprovalStatus = status;
                 await _context.SaveChangesAsync();
             }
-            return RedirectToPage();
+            return RedirectToPage(new { SearchTerm, StatusFilter });
         }
     }
 }

@@ -2,7 +2,30 @@
 @model MosqueRegistrationApp.Pages.Admin.DashboardModel
 @{ ViewData["Title"] = "Admin Dashboard"; }
 
-<h2>Admin Portal - Registration Approvals</h2>
+<h2>Admin Portal - Member Directory & Approvals</h2>
+
+<!-- Search & Filter Form -->
+<form method="get" class="row g-3 my-3">
+    <div class="col-md-5">
+        <input type="text" 
+               asp-for="SearchTerm" 
+               class="form-control" 
+               placeholder="Search by Full Name or IC Number..." />
+    </div>
+    <div class="col-md-3">
+        <select asp-for="StatusFilter" class="form-select">
+            <option value="All">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a asp-page="/Admin/Dashboard" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
+
 <table class="table table-bordered table-striped align-middle">
     <thead>
         <tr>
@@ -15,44 +38,57 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model.RegisteredUsers)
+        @if (Model.RegisteredUsers != null && Model.RegisteredUsers.Count > 0)
+        {
+            @foreach (var user in Model.RegisteredUsers)
+            {
+                <tr>
+                    <td>@user.FullName</td>
+                    <td>@user.IcNumber</td>
+                    <td>@user.CurrentAddress</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
+                        {
+                            <a href="@user.ProofOfResidencyImagePath" target="_blank">View Proof</a>
+                        }
+                    </td>
+                    <td>
+                        @if (user.ApprovalStatus == "Approved")
+                        {
+                            <span class="badge bg-success">Approved</span>
+                        }
+                        else if (user.ApprovalStatus == "Rejected")
+                        {
+                            <span class="badge bg-danger">Rejected</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        }
+                    </td>
+                    <td>
+                        <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <input type="hidden" name="status" value="Approved" />
+                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                        </form>
+                        <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <input type="hidden" name="status" value="Rejected" />
+                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                            <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@user.FullName</td>
-                <td>@user.IcNumber</td>
-                <td>@user.CurrentAddress</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
-                    {
-                        <a href="@user.ProofOfResidencyImagePath" target="_blank">View Proof</a>
-                    }
-                </td>
-                <td>
-                    @if (user.ApprovalStatus == "Approved")
-                    {
-                        <span class="badge bg-success">Approved</span>
-                    }
-                    else if (user.ApprovalStatus == "Rejected")
-                    {
-                        <span class="badge bg-danger">Rejected</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-warning text-dark">Pending</span>
-                    }
-                </td>
-                <td>
-                    <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
-                        <input type="hidden" name="userId" value="@user.Id" />
-                        <input type="hidden" name="status" value="Approved" />
-                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
-                    </form>
-                    <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
-                        <input type="hidden" name="userId" value="@user.Id" />
-                        <input type="hidden" name="status" value="Rejected" />
-                        <button type="submit" class="btn btn-sm btn-danger">Reject</button>
-                    </form>
-                </td>
+                <td colspan="6" class="text-center text-muted">No member records match your search criteria.</td>
             </tr>
         }
     </tbody>
