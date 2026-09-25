@@ -2,7 +2,16 @@
 @model MosqueRegistrationApp.Pages.Admin.DashboardModel
 @{ ViewData["Title"] = "Admin Dashboard"; }
 
-<h2>Admin Portal - Member Directory & Approvals</h2>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Admin Portal - Member Directory & Approvals</h2>
+    <form method="post" asp-page-handler="ExportCsv">
+        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+        <button type="submit" class="btn btn-success">
+            📊 Export to CSV
+        </button>
+    </form>
+</div>
 
 <!-- Search & Filter Form -->
 <form method="get" class="row g-3 my-3">
