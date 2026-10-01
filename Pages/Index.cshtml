@@ -1,15 +1,56 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center mt-5">
-    <h1 class="display-4">Welcome to Mosque Registration Portal</h1>
-    <p class="lead">Please log in or register your account below.</p>
+<!-- Hero Section -->
+<div class="card card-custom overflow-hidden mb-4 border-0 text-white" style="background: linear-gradient(135deg, var(--emerald-dark) 0%, var(--primary-emerald) 100%); border-bottom: 3px solid var(--accent-gold) !important;">
+    <div class="card-body p-4 p-md-5 text-center">
+        <h1 class="display-5 fw-bold mb-2">Welcome to Mosque Community Portal</h1>
+        <p class="lead text-white-50 mb-4">Official resident registration and community service directory for local congregants.</p>
+        
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="d-flex justify-content-center gap-3">
+                <a asp-page="/Account/Register" class="btn btn-gold btn-lg rounded-pill px-4 shadow-sm">
+                    <i class="bi bi-person-plus-fill me-2"></i>Register Account
+                </a>
+                <a asp-page="/Account/Login" class="btn btn-outline-light btn-lg rounded-pill px-4">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Member Login
+                </a>
+            </div>
+        }
+        else
+        {
+            <a asp-page="/User/Dashboard" class="btn btn-gold btn-lg rounded-pill px-4 shadow-sm">
+                <i class="bi bi-speedometer2 me-2"></i>Go to Dashboard
+            </a>
+        }
+    </div>
+</div>
 
-    <div class="mt-4">
-        <a class="btn btn-primary btn-lg me-2" asp-page="/Account/Login">Login</a>
-        <a class="btn btn-outline-secondary btn-lg" asp-page="/Account/Register">Register Account</a>
+<!-- Quick Feature Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card card-custom h-100 p-4 text-center">
+            <div class="display-6 text-gold mb-3"><i class="bi bi-card-checklist"></i></div>
+            <h5 class="fw-bold" style="color: var(--primary-emerald);">Official Registration</h5>
+            <p class="text-muted small mb-0">Register as a recognized resident in the local kariah to receive official community updates and welfare assistance.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-custom h-100 p-4 text-center">
+            <div class="display-6 text-gold mb-3"><i class="bi bi-shield-check"></i></div>
+            <h5 class="fw-bold" style="color: var(--primary-emerald);">Verification & Privacy</h5>
+            <p class="text-muted small mb-0">Your proof of residency and identity credentials are securely reviewed and stored by mosque committee admins.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-custom h-100 p-4 text-center">
+            <div class="display-6 text-gold mb-3"><i class="bi bi-person-badge"></i></div>
+            <h5 class="fw-bold" style="color: var(--primary-emerald);">Member Portal</h5>
+            <p class="text-muted small mb-0">Access your personal profile status, review submitted document verification, and manage account details anytime.</p>
+        </div>
     </div>
 </div>

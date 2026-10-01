@@ -2,103 +2,131 @@
 @model MosqueRegistrationApp.Pages.Admin.DashboardModel
 @{ ViewData["Title"] = "Admin Dashboard"; }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Admin Portal - Member Directory & Approvals</h2>
-    <form method="post" asp-page-handler="ExportCsv">
-        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-        <button type="submit" class="btn btn-success">
-            📊 Export to CSV
-        </button>
+<div class="row align-items-center mb-4">
+    <div class="col-md-8">
+        <h2 class="fw-bold mb-1" style="color: var(--primary-emerald);">
+            <i class="bi bi-shield-check text-gold me-2"></i>Admin Directory Portal
+        </h2>
+        <p class="text-muted mb-0">Review resident applications, update verification statuses, and export database records.</p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <form method="post" asp-page-handler="ExportCsv">
+            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+            <button type="submit" class="btn btn-gold shadow-sm">
+                <i class="bi bi-file-earmark-spreadsheet me-1"></i> Export to CSV
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Search & Filter Card -->
+<div class="card card-custom p-3 mb-4">
+    <form method="get" class="row g-3">
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" 
+                       asp-for="SearchTerm" 
+                       class="form-control border-start-0" 
+                       placeholder="Search by Full Name or IC Number..." />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <select asp-for="StatusFilter" class="form-select">
+                <option value="All">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-emerald flex-grow-1">Filter</button>
+            <a asp-page="/Admin/Dashboard" class="btn btn-outline-secondary">Reset</a>
+        </div>
     </form>
 </div>
 
-<!-- Search & Filter Form -->
-<form method="get" class="row g-3 my-3">
-    <div class="col-md-5">
-        <input type="text" 
-               asp-for="SearchTerm" 
-               class="form-control" 
-               placeholder="Search by Full Name or IC Number..." />
+<!-- Member List Table Container -->
+<div class="card card-custom overflow-hidden">
+    <div class="card-header card-header-emerald d-flex justify-content-between align-items-center py-3">
+        <h5 class="mb-0 fw-semibold"><i class="bi bi-people me-2"></i>Registered Mosque Members</h5>
+        <span class="badge bg-white text-dark fw-bold">Total: @(Model.RegisteredUsers?.Count ?? 0)</span>
     </div>
-    <div class="col-md-3">
-        <select asp-for="StatusFilter" class="form-select">
-            <option value="All">All Statuses</option>
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-        </select>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-custom align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-3">Full Name</th>
+                        <th>IC Number</th>
+                        <th>Address</th>
+                        <th>Proof Document</th>
+                        <th>Status</th>
+                        <th class="text-end pe-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.RegisteredUsers != null && Model.RegisteredUsers.Count > 0)
+                    {
+                        @foreach (var user in Model.RegisteredUsers)
+                        {
+                            <tr>
+                                <td class="ps-3 fw-medium">@user.FullName</td>
+                                <td><code>@user.IcNumber</code></td>
+                                <td><small class="text-muted">@user.CurrentAddress</small></td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
+                                    {
+                                        <a href="@user.ProofOfResidencyImagePath" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">
+                                            <i class="bi bi-file-image me-1"></i> View Proof
+                                        </a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (user.ApprovalStatus == "Approved")
+                                    {
+                                        <span class="badge-approved"><i class="bi bi-check-circle me-1"></i> Approved</span>
+                                    }
+                                    else if (user.ApprovalStatus == "Rejected")
+                                    {
+                                        <span class="badge-rejected"><i class="bi bi-x-circle me-1"></i> Rejected</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
+                                    }
+                                </td>
+                                <td class="text-end pe-3">
+                                    <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
+                                        <input type="hidden" name="userId" value="@user.Id" />
+                                        <input type="hidden" name="status" value="Approved" />
+                                        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                        <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">Approve</button>
+                                    </form>
+                                    <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
+                                        <input type="hidden" name="userId" value="@user.Id" />
+                                        <input type="hidden" name="status" value="Rejected" />
+                                        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">Reject</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                                No member records found matching your current filters.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="col-md-4">
-        <button type="submit" class="btn btn-primary">Filter</button>
-        <a asp-page="/Admin/Dashboard" class="btn btn-secondary">Reset</a>
-    </div>
-</form>
-
-<table class="table table-bordered table-striped align-middle">
-    <thead>
-        <tr>
-            <th>Full Name</th>
-            <th>IC Number</th>
-            <th>Address</th>
-            <th>Proof File</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.RegisteredUsers != null && Model.RegisteredUsers.Count > 0)
-        {
-            @foreach (var user in Model.RegisteredUsers)
-            {
-                <tr>
-                    <td>@user.FullName</td>
-                    <td>@user.IcNumber</td>
-                    <td>@user.CurrentAddress</td>
-                    <td>
-                        @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
-                        {
-                            <a href="@user.ProofOfResidencyImagePath" target="_blank">View Proof</a>
-                        }
-                    </td>
-                    <td>
-                        @if (user.ApprovalStatus == "Approved")
-                        {
-                            <span class="badge bg-success">Approved</span>
-                        }
-                        else if (user.ApprovalStatus == "Rejected")
-                        {
-                            <span class="badge bg-danger">Rejected</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-warning text-dark">Pending</span>
-                        }
-                    </td>
-                    <td>
-                        <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <input type="hidden" name="status" value="Approved" />
-                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
-                        </form>
-                        <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
-                            <input type="hidden" name="userId" value="@user.Id" />
-                            <input type="hidden" name="status" value="Rejected" />
-                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                            <button type="submit" class="btn btn-sm btn-danger">Reject</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="6" class="text-center text-muted">No member records match your search criteria.</td>
-            </tr>
-        }
-    </tbody>
-</table>
+</div>

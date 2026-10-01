@@ -1,12 +1,46 @@
 @page
 @model MosqueRegistrationApp.Pages.Account.LoginModel
-@{ ViewData["Title"] = "Login"; }
+@{ 
+    ViewData["Title"] = "Login"; 
+}
 
-<h2>Account Login</h2>
-<form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div><label>Username</label><input asp-for="Input.Username" class="form-control" required /></div>
-    <div><label>Password</label><input asp-for="Input.Password" type="password" class="form-control" required /></div>
-    <br />
-    <button type="submit" class="btn btn-success">Login</button>
-</form>
+<div class="row justify-content-center my-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card card-custom shadow-sm">
+            <div class="card-header card-header-emerald text-center py-3">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-box-arrow-in-right text-gold me-2"></i>Member Login</h4>
+                <small class="text-white-50">Enter your credentials to access your account</small>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    <div asp-validation-summary="All" class="text-danger mb-3 small"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Username" class="form-label fw-semibold">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted"><i class="bi bi-person"></i></span>
+                            <input asp-for="Input.Username" class="form-control" placeholder="Enter username" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Input.Password" class="form-label fw-semibold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted"><i class="bi bi-lock"></i></span>
+                            <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter password" required />
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-gold py-2 fw-bold text-uppercase shadow-sm">
+                            <i class="bi bi-door-open-fill me-1"></i> Log In
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer bg-light text-center py-3 border-top-0">
+                <small class="text-muted">Don't have an account yet? <a asp-page="/Account/Register" class="fw-bold" style="color: var(--primary-emerald);">Register here</a></small>
+            </div>
+        </div>
+    </div>
+</div>
