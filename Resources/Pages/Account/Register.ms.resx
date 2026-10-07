@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="PageTitle" xml:space="preserve">
+    <value>Pendaftaran Masjid</value>
+  </data>
+  <data name="CardHeaderTitle" xml:space="preserve">
+    <value>Pendaftaran Ahli Masjid</value>
+  </data>
+  <data name="CardHeaderSubtitle" xml:space="preserve">
+    <value>Sila isi maklumat peribadi anda untuk memohon pendaftaran</value>
+  </data>
+
+  <!-- Section: Account Credentials -->
+  <data name="AccountCredentialsSection" xml:space="preserve">
+    <value>Maklumat Log Masuk</value>
+  </data>
+  <data name="UsernameLabel" xml:space="preserve">
+    <value>Nama Pengguna</value>
+  </data>
+  <data name="UsernamePlaceholder" xml:space="preserve">
+    <value>Pilih nama pengguna</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>Kata Laluan</value>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Masukkan kata laluan</value>
+  </data>
+
+  <!-- Section: Personal Information -->
+  <data name="PersonalInformationSection" xml:space="preserve">
+    <value>Maklumat Peribadi</value>
+  </data>
+  <data name="FullNameLabel" xml:space="preserve">
+    <value>Nama Penuh (seperti dalam MyKad)</value>
+  </data>
+  <data name="FullNamePlaceholder" xml:space="preserve">
+    <value>contoh: Ahmad bin Abdullah</value>
+  </data>
+  <data name="IcNumberLabel" xml:space="preserve">
+    <value>Nombor Kad Pengenalan</value>
+  </data>
+  <data name="IcNumberPlaceholder" xml:space="preserve">
+    <value>contoh: 900101105555</value>
+  </data>
+  <data name="MaritalStatusLabel" xml:space="preserve">
+    <value>Status Perkahwinan</value>
+  </data>
+  <data name="SelectMaritalStatusOption" xml:space="preserve">
+    <value>-- Pilih Status Perkahwinan --</value>
+  </data>
+  <data name="MaritalStatusSingle" xml:space="preserve">
+    <value>Bujang</value>
+  </data>
+  <data name="MaritalStatusMarried" xml:space="preserve">
+    <value>Berkahwin</value>
+  </data>
+  <data name="MaritalStatusDivorced" xml:space="preserve">
+    <value>Bercerai</value>
+  </data>
+  <data name="MaritalStatusWidowed" xml:space="preserve">
+    <value>Balu / Duda</value>
+  </data>
+  <data name="CurrentAddressLabel" xml:space="preserve">
+    <value>Alamat Kediaman Semasa</value>
+  </data>
+  <data name="CurrentAddressPlaceholder" xml:space="preserve">
+    <value>No rumah, Nama jalan, Poskod, Bandar</value>
+  </data>
+  <data name="ResidencyDurationLabel" xml:space="preserve">
+    <value>Tempoh Menetap (Tahun)</value>
+  </data>
+  <data name="ResidencyDurationPlaceholder" xml:space="preserve">
+    <value>contoh: 5</value>
+  </data>
+  <data name="ProofOfResidencyLabel" xml:space="preserve">
+    <value>Bukti Kediaman (Muat Naik Gambar)</value>
+  </data>
+  <data name="ProofOfResidencyHelpText" xml:space="preserve">
+    <value>Muat naik gambar atau bil utiliti yang jelas menunjukkan alamat anda.</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Hantar Pendaftaran</value>
+  </data>
+</root>

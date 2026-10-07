@@ -1,20 +1,25 @@
 @page
 @model MosqueRegistrationApp.Pages.Admin.DashboardModel
-@{ ViewData["Title"] = "Admin Dashboard"; }
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{ 
+    ViewData["Title"] = Localizer["PageTitle"]; 
+}
 
 <div class="row align-items-center mb-4">
     <div class="col-md-8">
         <h2 class="fw-bold mb-1" style="color: var(--primary-emerald);">
-            <i class="bi bi-shield-check text-gold me-2"></i>Admin Directory Portal
+            <i class="bi bi-shield-check text-gold me-2"></i>@Localizer["PortalTitle"]
         </h2>
-        <p class="text-muted mb-0">Review resident applications, update verification statuses, and export database records.</p>
+        <p class="text-muted mb-0">@Localizer["PortalDescription"]</p>
     </div>
     <div class="col-md-4 text-md-end mt-3 mt-md-0">
         <form method="post" asp-page-handler="ExportCsv">
             <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
             <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
             <button type="submit" class="btn btn-gold shadow-sm">
-                <i class="bi bi-file-earmark-spreadsheet me-1"></i> Export to CSV
+                <i class="bi bi-file-earmark-spreadsheet me-1"></i> @Localizer["ExportCsvButton"]
             </button>
         </form>
     </div>
@@ -29,20 +34,20 @@
                 <input type="text" 
                        asp-for="SearchTerm" 
                        class="form-control border-start-0" 
-                       placeholder="Search by Full Name or IC Number..." />
+                       placeholder="@Localizer["SearchPlaceholder"]" />
             </div>
         </div>
         <div class="col-md-3">
             <select asp-for="StatusFilter" class="form-select">
-                <option value="All">All Statuses</option>
-                <option value="Pending">Pending</option>
-                <option value="Approved">Approved</option>
-                <option value="Rejected">Rejected</option>
+                <option value="All">@Localizer["FilterAllStatuses"]</option>
+                <option value="Pending">@Localizer["FilterPending"]</option>
+                <option value="Approved">@Localizer["FilterApproved"]</option>
+                <option value="Rejected">@Localizer["FilterRejected"]</option>
             </select>
         </div>
         <div class="col-md-3 d-flex gap-2">
-            <button type="submit" class="btn btn-emerald flex-grow-1">Filter</button>
-            <a asp-page="/Admin/Dashboard" class="btn btn-outline-secondary">Reset</a>
+            <button type="submit" class="btn btn-emerald flex-grow-1">@Localizer["FilterButton"]</button>
+            <a asp-page="/Admin/Dashboard" class="btn btn-outline-secondary">@Localizer["ResetButton"]</a>
         </div>
     </form>
 </div>
@@ -50,20 +55,20 @@
 <!-- Member List Table Container -->
 <div class="card card-custom overflow-hidden">
     <div class="card-header card-header-emerald d-flex justify-content-between align-items-center py-3">
-        <h5 class="mb-0 fw-semibold"><i class="bi bi-people me-2"></i>Registered Mosque Members</h5>
-        <span class="badge bg-white text-dark fw-bold">Total: @(Model.RegisteredUsers?.Count ?? 0)</span>
+        <h5 class="mb-0 fw-semibold"><i class="bi bi-people me-2"></i>@Localizer["TableHeaderTitle"]</h5>
+        <span class="badge bg-white text-dark fw-bold">@Localizer["TotalLabel"]: @(Model.RegisteredUsers?.Count ?? 0)</span>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-custom align-middle mb-0">
                 <thead>
                     <tr>
-                        <th class="ps-3">Full Name</th>
-                        <th>IC Number</th>
-                        <th>Address</th>
-                        <th>Proof Document</th>
-                        <th>Status</th>
-                        <th class="text-end pe-3">Actions</th>
+                        <th class="ps-3">@Localizer["ColumnFullName"]</th>
+                        <th>@Localizer["ColumnIcNumber"]</th>
+                        <th>@Localizer["ColumnAddress"]</th>
+                        <th>@Localizer["ColumnProofDocument"]</th>
+                        <th>@Localizer["ColumnStatus"]</th>
+                        <th class="text-end pe-3">@Localizer["ColumnActions"]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,22 +84,22 @@
                                     @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
                                     {
                                         <a href="@user.ProofOfResidencyImagePath" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">
-                                            <i class="bi bi-file-image me-1"></i> View Proof
+                                            <i class="bi bi-file-image me-1"></i> @Localizer["ViewProofButton"]
                                         </a>
                                     }
                                 </td>
                                 <td>
                                     @if (user.ApprovalStatus == "Approved")
                                     {
-                                        <span class="badge-approved"><i class="bi bi-check-circle me-1"></i> Approved</span>
+                                        <span class="badge-approved"><i class="bi bi-check-circle me-1"></i> @Localizer["StatusApproved"]</span>
                                     }
                                     else if (user.ApprovalStatus == "Rejected")
                                     {
-                                        <span class="badge-rejected"><i class="bi bi-x-circle me-1"></i> Rejected</span>
+                                        <span class="badge-rejected"><i class="bi bi-x-circle me-1"></i> @Localizer["StatusRejected"]</span>
                                     }
                                     else
                                     {
-                                        <span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
+                                        <span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i> @Localizer["StatusPending"]</span>
                                     }
                                 </td>
                                 <td class="text-end pe-3">
@@ -103,14 +108,14 @@
                                         <input type="hidden" name="status" value="Approved" />
                                         <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
                                         <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                        <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">Approve</button>
+                                        <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">@Localizer["ActionApprove"]</button>
                                     </form>
                                     <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
                                         <input type="hidden" name="userId" value="@user.Id" />
                                         <input type="hidden" name="status" value="Rejected" />
                                         <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
                                         <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">Reject</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">@Localizer["ActionReject"]</button>
                                     </form>
                                 </td>
                             </tr>
@@ -121,7 +126,7 @@
                         <tr>
                             <td colspan="6" class="text-center py-4 text-muted">
                                 <i class="bi bi-inbox display-6 d-block mb-2"></i>
-                                No member records found matching your current filters.
+                                @Localizer["NoRecordsFound"]
                             </td>
                         </tr>
                     }

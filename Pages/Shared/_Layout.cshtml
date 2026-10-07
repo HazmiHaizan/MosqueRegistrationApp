@@ -1,9 +1,16 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.AspNetCore.Mvc.Localization
+    @using Microsoft.Extensions.Options
+    @inject IOptions<RequestLocalizationOptions> LocOptions
+    @inject IViewLocalizer Localizer
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mosque Portal</title>
+    <title>@ViewData["Title"] - @Localizer["BrandName"]</title>
     
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,11 +31,38 @@
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center fw-bold" asp-page="/Index">
                     <span class="brand-icon me-2"><i class="bi bi-moon-stars-fill text-gold"></i></span>
-                    <span class="brand-text">MOSQUE PORTAL</span>
+                    <span class="brand-text">@Localizer["BrandName"]</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                @{
+                    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+                    var currentCulture = requestCulture?.RequestCulture.Culture.Name ?? "en";
+                    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path}{Context.Request.QueryString}";
+                }
+
+                <form id="selectLanguage" asp-controller="Culture" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" method="post" class="d-inline">
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-globe me-1"></i> @(currentCulture == "ms" ? Localizer["LanguageMalay"] : Localizer["LanguageEnglish"])
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                            <li>
+                                <button type="submit" name="culture" value="en" class="dropdown-item @(currentCulture == "en" ? "fw-bold active" : "")">
+                                    🇬🇧 @Localizer["LanguageEnglish"]
+                                </button>
+                            </li>
+                            <li>
+                                <button type="submit" name="culture" value="ms" class="dropdown-item @(currentCulture == "ms" ? "fw-bold active" : "")">
+                                    🇲🇾 @Localizer["LanguageMalay"]
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                         @if (User.Identity.IsAuthenticated)
@@ -36,19 +70,19 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/Dashboard"><i class="bi bi-speedometer2 me-1"></i> Admin Portal</a>
+                                    <a class="nav-link" asp-page="/Admin/Dashboard"><i class="bi bi-speedometer2 me-1"></i> @Localizer["AdminPortal"]</a>
                                 </li>
                             }
                             else
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-page="/User/Dashboard"><i class="bi bi-person-badge me-1"></i> My Profile</a>
+                                    <a class="nav-link" asp-page="/User/Dashboard"><i class="bi bi-person-badge me-1"></i> @Localizer["MyProfile"]</a>
                                 </li>
                             }
                             <li class="nav-item ms-lg-2">
                                 <form method="post" asp-controller="Account" asp-action="Logout" class="d-inline">
                                     <button type="submit" class="btn btn-gold btn-sm rounded-pill px-3" asp-page="/Account/Logout" method="post" asp-antiforgery="true">
-                                        <i class="bi bi-box-arrow-right me-1"></i> Logout
+                                        <i class="bi bi-box-arrow-right me-1"></i> @Localizer["Logout"]
                                     </button>
                                 </form>
                             </li>
@@ -56,11 +90,11 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-page="/Account/Login"><i class="bi bi-box-arrow-in-right me-1"></i> Login</a>
+                                <a class="nav-link" asp-page="/Account/Login"><i class="bi bi-box-arrow-in-right me-1"></i> @Localizer["Login"]</a>
                             </li>
                             <li class="nav-item ms-lg-2">
                                 <a class="btn btn-gold btn-sm rounded-pill px-3" asp-page="/Account/Register">
-                                    <i class="bi bi-person-plus me-1"></i> Register
+                                    <i class="bi bi-person-plus me-1"></i> @Localizer["Register"]
                                 </a>
                             </li>
                         }
@@ -80,7 +114,7 @@
     <!-- Footer -->
     <footer class="footer-custom py-3 border-top mt-auto">
         <div class="container text-center text-muted small">
-            &copy; @DateTime.Now.Year Mosque Community Management Portal &bull; HH Creations. All rights reserved.
+            &copy; @DateTime.Now.Year @Localizer["FooterRights"]
         </div>
     </footer>
 

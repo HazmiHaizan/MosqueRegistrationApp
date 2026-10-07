@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- Page Title & Hero Section -->
+  <data name="PageTitle" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="HeroTitle" xml:space="preserve">
+    <value>Welcome to Mosque Community Portal</value>
+  </data>
+  <data name="HeroSubtitle" xml:space="preserve">
+    <value>Official resident registration and community service directory for local congregants.</value>
+  </data>
+  <data name="RegisterAccount" xml:space="preserve">
+    <value>Register Account</value>
+  </data>
+  <data name="MemberLogin" xml:space="preserve">
+    <value>Member Login</value>
+  </data>
+  <data name="GoToDashboard" xml:space="preserve">
+    <value>Go to Dashboard</value>
+  </data>
+
+  <!-- Feature Card 1: Official Registration -->
+  <data name="FeatureRegistrationTitle" xml:space="preserve">
+    <value>Official Registration</value>
+  </data>
+  <data name="FeatureRegistrationDesc" xml:space="preserve">
+    <value>Register as a recognized resident in the local kariah to receive official community updates and welfare assistance.</value>
+  </data>
+
+  <!-- Feature Card 2: Verification & Privacy -->
+  <data name="FeatureVerificationTitle" xml:space="preserve">
+    <value>Verification &amp; Privacy</value>
+  </data>
+  <data name="FeatureVerificationDesc" xml:space="preserve">
+    <value>Your proof of residency and identity credentials are securely reviewed and stored by mosque committee admins.</value>
+  </data>
+
+  <!-- Feature Card 3: Member Portal -->
+  <data name="FeaturePortalTitle" xml:space="preserve">
+    <value>Member Portal</value>
+  </data>
+  <data name="FeaturePortalDesc" xml:space="preserve">
+    <value>Access your personal profile status, review submitted document verification, and manage account details anytime.</value>
+  </data>
+</root>

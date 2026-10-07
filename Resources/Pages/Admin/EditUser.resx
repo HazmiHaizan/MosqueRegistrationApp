@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="PageTitle" xml:space="preserve">
+    <value>Edit Member</value>
+  </data>
+  <data name="Heading" xml:space="preserve">
+    <value>Edit Member Information</value>
+  </data>
+  <data name="FullNameLabel" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="IcNumberLabel" xml:space="preserve">
+    <value>IC Number</value>
+  </data>
+  <data name="CurrentAddressLabel" xml:space="preserve">
+    <value>Current Address</value>
+  </data>
+  <data name="MaritalStatusLabel" xml:space="preserve">
+    <value>Marital Status</value>
+  </data>
+  <data name="ResidencyDurationLabel" xml:space="preserve">
+    <value>Residency Duration (Years)</value>
+  </data>
+  <data name="ProofOfResidencyLabel" xml:space="preserve">
+    <value>Proof of Residency</value>
+  </data>
+  <data name="ViewExistingProofLink" xml:space="preserve">
+    <value>View Existing Proof</value>
+  </data>
+  <data name="KeepExistingDocHelpText" xml:space="preserve">
+    <value>Leave empty to keep the existing document.</value>
+  </data>
+  <data name="SaveChangesButton" xml:space="preserve">
+    <value>Save Changes</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+</root>

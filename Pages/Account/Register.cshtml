@@ -1,76 +1,79 @@
 @page
 @model MosqueRegistrationApp.Pages.Account.RegisterModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{ 
-    ViewData["Title"] = "Mosque Registration"; 
+    ViewData["Title"] = Localizer["PageTitle"]; 
 }
 
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-7">
         <div class="card card-custom shadow-sm my-4">
             <div class="card-header card-header-emerald text-center py-3">
-                <h4 class="mb-0 fw-bold"><i class="bi bi-person-plus-fill text-gold me-2"></i>Mosque Member Registration</h4>
-                <small class="text-white-50">Please fill in your personal details to apply for registration</small>
+                <h4 class="mb-0 fw-bold"><i class="bi bi-person-plus-fill text-gold me-2"></i>@Localizer["CardHeaderTitle"]</h4>
+                <small class="text-white-50">@Localizer["CardHeaderSubtitle"]</small>
             </div>
             <div class="card-body p-4">
                 <form method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="All" class="text-danger mb-3 small"></div>
 
-                    <h5 class="fw-bold mb-3" style="color: var(--primary-emerald);"><i class="bi bi-shield-lock me-1"></i> Account Credentials</h5>
+                    <h5 class="fw-bold mb-3" style="color: var(--primary-emerald);"><i class="bi bi-shield-lock me-1"></i> @Localizer["AccountCredentialsSection"]</h5>
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
-                            <label asp-for="Input.Username" class="form-label fw-semibold">Username</label>
-                            <input asp-for="Input.Username" class="form-control" placeholder="Choose a username" required />
+                            <label asp-for="Input.Username" class="form-label fw-semibold">@Localizer["UsernameLabel"]</label>
+                            <input asp-for="Input.Username" class="form-control" placeholder="@Localizer["UsernamePlaceholder"]" required />
                         </div>
                         <div class="col-md-6">
-                            <label asp-for="Input.Password" class="form-label fw-semibold">Password</label>
-                            <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter password" required />
+                            <label asp-for="Input.Password" class="form-label fw-semibold">@Localizer["PasswordLabel"]</label>
+                            <input asp-for="Input.Password" type="password" class="form-control" placeholder="@Localizer["PasswordPlaceholder"]" required />
                         </div>
                     </div>
 
-                    <h5 class="fw-bold mb-3" style="color: var(--primary-emerald);"><i class="bi bi-person-vcard me-1"></i> Personal Information</h5>
+                    <h5 class="fw-bold mb-3" style="color: var(--primary-emerald);"><i class="bi bi-person-vcard me-1"></i> @Localizer["PersonalInformationSection"]</h5>
                     
                     <div class="mb-3">
-                        <label asp-for="Input.FullName" class="form-label fw-semibold">Full Name (as per MyKad)</label>
-                        <input asp-for="Input.FullName" class="form-control" placeholder="e.g. Ahmad bin Abdullah" required />
+                        <label asp-for="Input.FullName" class="form-label fw-semibold">@Localizer["FullNameLabel"]</label>
+                        <input asp-for="Input.FullName" class="form-control" placeholder="@Localizer["FullNamePlaceholder"]" required />
                     </div>
 
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
-                            <label asp-for="Input.IcNumber" class="form-label fw-semibold">IC Number</label>
-                            <input asp-for="Input.IcNumber" class="form-control" placeholder="e.g. 900101105555" required />
+                            <label asp-for="Input.IcNumber" class="form-label fw-semibold">@Localizer["IcNumberLabel"]</label>
+                            <input asp-for="Input.IcNumber" class="form-control" placeholder="@Localizer["IcNumberPlaceholder"]" required />
                         </div>
                         <div class="col-md-6">
-                            <label asp-for="Input.MaritalStatus" class="form-label fw-semibold">Marital Status</label>
+                            <label asp-for="Input.MaritalStatus" class="form-label fw-semibold">@Localizer["MaritalStatusLabel"]</label>
                             <select asp-for="Input.MaritalStatus" class="form-select" required>
-                                <option value="" disabled selected>-- Select Marital Status --</option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Divorced">Divorced</option>
-                                <option value="Widowed">Widowed</option>
+                                <option value="" disabled selected>@Localizer["SelectMaritalStatusOption"]</option>
+                                <option value="Single">@Localizer["MaritalStatusSingle"]</option>
+                                <option value="Married">@Localizer["MaritalStatusMarried"]</option>
+                                <option value="Divorced">@Localizer["MaritalStatusDivorced"]</option>
+                                <option value="Widowed">@Localizer["MaritalStatusWidowed"]</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Input.CurrentAddress" class="form-label fw-semibold">Current Residential Address</label>
-                        <textarea asp-for="Input.CurrentAddress" class="form-control" rows="2" placeholder="House no, Street name, Postcode, City" required></textarea>
+                        <label asp-for="Input.CurrentAddress" class="form-label fw-semibold">@Localizer["CurrentAddressLabel"]</label>
+                        <textarea asp-for="Input.CurrentAddress" class="form-control" rows="2" placeholder="@Localizer["CurrentAddressPlaceholder"]" required></textarea>
                     </div>
 
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
-                            <label asp-for="Input.ResidencyDurationYears" class="form-label fw-semibold">Residency Duration (Years)</label>
-                            <input asp-for="Input.ResidencyDurationYears" type="number" min="0" class="form-control" placeholder="e.g. 5" required />
+                            <label asp-for="Input.ResidencyDurationYears" class="form-label fw-semibold">@Localizer["ResidencyDurationLabel"]</label>
+                            <input asp-for="Input.ResidencyDurationYears" type="number" min="0" class="form-control" placeholder="@Localizer["ResidencyDurationPlaceholder"]" required />
                         </div>
                         <div class="col-md-6">
-                            <label asp-for="Input.ProofOfResidency" class="form-label fw-semibold">Proof of Residency (Upload Image)</label>
+                            <label asp-for="Input.ProofOfResidency" class="form-label fw-semibold">@Localizer["ProofOfResidencyLabel"]</label>
                             <input asp-for="Input.ProofOfResidency" type="file" accept="image/*" class="form-control" required />
-                            <div class="form-text">Upload a clear photo or utility bill showing your address.</div>
+                            <div class="form-text">@Localizer["ProofOfResidencyHelpText"]</div>
                         </div>
                     </div>
 
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-gold py-2 fw-bold text-uppercase shadow-sm">
-                            <i class="bi bi-check-circle-fill me-1"></i> Submit Registration
+                            <i class="bi bi-check-circle-fill me-1"></i> @Localizer["SubmitButton"]
                         </button>
                     </div>
                 </form>

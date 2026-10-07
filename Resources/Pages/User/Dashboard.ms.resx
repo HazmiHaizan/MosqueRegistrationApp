@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="PageTitle" xml:space="preserve">
+    <value>Papan Pemuka Pengguna</value>
+  </data>
+  <data name="DashboardHeader" xml:space="preserve">
+    <value>Papan Pemuka Profil Saya</value>
+  </data>
+  <data name="DashboardSubtitle" xml:space="preserve">
+    <value>Lihat status pendaftaran semasa dan butiran yang diserahkan.</value>
+  </data>
+  <data name="StatusPendingTitle" xml:space="preserve">
+    <value>Pendaftaran Dalam Semakan</value>
+  </data>
+  <data name="StatusPendingDesc" xml:space="preserve">
+    <value>Permohonan pendaftaran anda telah berjaya diserahkan dan sedang disemak oleh pentadbir masjid.</value>
+  </data>
+  <data name="StatusRejectedTitle" xml:space="preserve">
+    <value>Pendaftaran Ditolak</value>
+  </data>
+  <data name="StatusRejectedDesc" xml:space="preserve">
+    <value>Permohonan anda tidak diluluskan. Sila hubungi pejabat jawatankuasa masjid untuk maklumat lanjut.</value>
+  </data>
+  <data name="StatusApprovedTitle" xml:space="preserve">
+    <value>Akaun Aktif &amp; Diluluskan</value>
+  </data>
+  <data name="StatusApprovedDesc" xml:space="preserve">
+    <value>Anda adalah ahli berdaftar rasmi dalam direktori kariah masjid ini.</value>
+  </data>
+  <data name="PersonalDetailsHeader" xml:space="preserve">
+    <value>Butiran Pendaftaran Peribadi</value>
+  </data>
+  <data name="FullNameLabel" xml:space="preserve">
+    <value>Nama Penuh</value>
+  </data>
+  <data name="IcNumberLabel" xml:space="preserve">
+    <value>Nombor Kad Pengenalan</value>
+  </data>
+  <data name="MaritalStatusLabel" xml:space="preserve">
+    <value>Status Perkahwinan</value>
+  </data>
+  <data name="ResidencyDurationLabel" xml:space="preserve">
+    <value>Tempoh Menetap</value>
+  </data>
+  <data name="YearsFormat" xml:space="preserve">
+    <value>{0} Tahun</value>
+  </data>
+  <data name="ResidentialAddressLabel" xml:space="preserve">
+    <value>Alamat Kediaman</value>
+  </data>
+  <data name="ProofOfResidencyLabel" xml:space="preserve">
+    <value>Dokumen Bukti Kediaman</value>
+  </data>
+  <data name="ProofImageAltText" xml:space="preserve">
+    <value>Dokumen Bukti</value>
+  </data>
+  <data name="NoDocumentUploaded" xml:space="preserve">
+    <value>Tiada dokumen dimuat naik.</value>
+  </data>
+</root>

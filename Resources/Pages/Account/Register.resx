@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="PageTitle" xml:space="preserve">
+    <value>Mosque Registration</value>
+  </data>
+  <data name="CardHeaderTitle" xml:space="preserve">
+    <value>Mosque Member Registration</value>
+  </data>
+  <data name="CardHeaderSubtitle" xml:space="preserve">
+    <value>Please fill in your personal details to apply for registration</value>
+  </data>
+
+  <!-- Section: Account Credentials -->
+  <data name="AccountCredentialsSection" xml:space="preserve">
+    <value>Account Credentials</value>
+  </data>
+  <data name="UsernameLabel" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="UsernamePlaceholder" xml:space="preserve">
+    <value>Choose a username</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordPlaceholder" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+
+  <!-- Section: Personal Information -->
+  <data name="PersonalInformationSection" xml:space="preserve">
+    <value>Personal Information</value>
+  </data>
+  <data name="FullNameLabel" xml:space="preserve">
+    <value>Full Name (as per MyKad)</value>
+  </data>
+  <data name="FullNamePlaceholder" xml:space="preserve">
+    <value>e.g. Ahmad bin Abdullah</value>
+  </data>
+  <data name="IcNumberLabel" xml:space="preserve">
+    <value>IC Number</value>
+  </data>
+  <data name="IcNumberPlaceholder" xml:space="preserve">
+    <value>e.g. 900101105555</value>
+  </data>
+  <data name="MaritalStatusLabel" xml:space="preserve">
+    <value>Marital Status</value>
+  </data>
+  <data name="SelectMaritalStatusOption" xml:space="preserve">
+    <value>-- Select Marital Status --</value>
+  </data>
+  <data name="MaritalStatusSingle" xml:space="preserve">
+    <value>Single</value>
+  </data>
+  <data name="MaritalStatusMarried" xml:space="preserve">
+    <value>Married</value>
+  </data>
+  <data name="MaritalStatusDivorced" xml:space="preserve">
+    <value>Divorced</value>
+  </data>
+  <data name="MaritalStatusWidowed" xml:space="preserve">
+    <value>Widowed</value>
+  </data>
+  <data name="CurrentAddressLabel" xml:space="preserve">
+    <value>Current Residential Address</value>
+  </data>
+  <data name="CurrentAddressPlaceholder" xml:space="preserve">
+    <value>House no, Street name, Postcode, City</value>
+  </data>
+  <data name="ResidencyDurationLabel" xml:space="preserve">
+    <value>Residency Duration (Years)</value>
+  </data>
+  <data name="ResidencyDurationPlaceholder" xml:space="preserve">
+    <value>e.g. 5</value>
+  </data>
+  <data name="ProofOfResidencyLabel" xml:space="preserve">
+    <value>Proof of Residency (Upload Image)</value>
+  </data>
+  <data name="ProofOfResidencyHelpText" xml:space="preserve">
+    <value>Upload a clear photo or utility bill showing your address.</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Submit Registration</value>
+  </data>
+</root>

@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MosqueRegistrationApp.Data;
 using MosqueRegistrationApp.Models;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 
 namespace MosqueRegistrationApp
 {
@@ -38,6 +41,38 @@ namespace MosqueRegistrationApp
 
             builder.Services.AddRazorPages();
 
+            // 1. Tell ASP.NET Core where your .resx files are located
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            // 2. Add localization support to Razor Pages and DataAnnotations
+            builder.Services.AddRazorPages()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization();
+
+            // 3. Define supported cultures
+            var supportedCultures = new[]
+            {
+                new CultureInfo("en"),
+                new CultureInfo("ms")
+            };
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                // Ensure Cookie provider takes precedence
+                options.RequestCultureProviders = new List<IRequestCultureProvider>
+                {
+                    new QueryStringRequestCultureProvider(),
+                    new CookieRequestCultureProvider(),
+                    new AcceptLanguageHeaderRequestCultureProvider()
+                };
+            });
+
+            builder.Services.AddControllers();
+
             var app = builder.Build();
 
             if (!app.Environment.IsDevelopment())
@@ -49,6 +84,12 @@ namespace MosqueRegistrationApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+
+            // 4. CRITICAL: Add RequestLocalization AFTER UseRouting and BEFORE UseAuthorization
+            var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
+            app.UseRequestLocalization(localizationOptions);
+
+            app.MapControllers();
 
             app.Use(async (context, next) =>
                 {

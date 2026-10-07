@@ -1,19 +1,24 @@
 @page "{id}"
 @model MosqueRegistrationApp.Pages.Admin.DeleteUserModel
-@{ ViewData["Title"] = "Delete Member"; }
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-<h2 class="text-danger">Delete Member Account</h2>
+@{ 
+    ViewData["Title"] = Localizer["PageTitle"]; 
+}
+
+<h2 class="text-danger">@Localizer["Heading"]</h2>
 <div class="alert alert-warning mt-3">
-    Are you sure you want to delete this member account? This action cannot be undone.
+    @Localizer["WarningMessage"]
 </div>
 
 <div class="card p-3 mb-3" style="max-width: 500px;">
-    <p><strong>Full Name:</strong> @Model.UserToDelete.FullName</p>
-    <p><strong>IC Number:</strong> @Model.UserToDelete.IcNumber</p>
-    <p><strong>Username:</strong> @Model.UserToDelete.UserName</p>
+    <p><strong>@Localizer["FullNameLabel"]:</strong> @Model.UserToDelete.FullName</p>
+    <p><strong>@Localizer["IcNumberLabel"]:</strong> @Model.UserToDelete.IcNumber</p>
+    <p><strong>@Localizer["UsernameLabel"]:</strong> @Model.UserToDelete.UserName</p>
 </div>
 
 <form method="post">
-    <button type="submit" class="btn btn-danger">Yes, Delete Account</button>
-    <a asp-page="/Admin/Dashboard" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-danger">@Localizer["ConfirmDeleteButton"]</button>
+    <a asp-page="/Admin/Dashboard" class="btn btn-secondary">@Localizer["CancelButton"]</a>
 </form>

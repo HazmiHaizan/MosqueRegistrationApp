@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="PageTitle" xml:space="preserve">
+    <value>Papan Pemuka Pentadbir</value>
+  </data>
+  <data name="PortalTitle" xml:space="preserve">
+    <value>Portal Direktori Pentadbir</value>
+  </data>
+  <data name="PortalDescription" xml:space="preserve">
+    <value>Semak permohonan penduduk, kemas kini status pengesahan, dan eksport rekod pangkalan data.</value>
+  </data>
+  <data name="ExportCsvButton" xml:space="preserve">
+    <value>Eksport ke CSV</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Cari mengikut Nama Penuh atau No. KP...</value>
+  </data>
+  <data name="FilterAllStatuses" xml:space="preserve">
+    <value>Semua Status</value>
+  </data>
+  <data name="FilterPending" xml:space="preserve">
+    <value>Dalam Proses</value>
+  </data>
+  <data name="FilterApproved" xml:space="preserve">
+    <value>Diluluskan</value>
+  </data>
+  <data name="FilterRejected" xml:space="preserve">
+    <value>Ditolak</value>
+  </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Tapis</value>
+  </data>
+  <data name="ResetButton" xml:space="preserve">
+    <value>Set Semula</value>
+  </data>
+  <data name="TableHeaderTitle" xml:space="preserve">
+    <value>Ahli Masjid Berdaftar</value>
+  </data>
+  <data name="TotalLabel" xml:space="preserve">
+    <value>Jumlah</value>
+  </data>
+  <data name="ColumnFullName" xml:space="preserve">
+    <value>Nama Penuh</value>
+  </data>
+  <data name="ColumnIcNumber" xml:space="preserve">
+    <value>No. Kad Pengenalan</value>
+  </data>
+  <data name="ColumnAddress" xml:space="preserve">
+    <value>Alamat</value>
+  </data>
+  <data name="ColumnProofDocument" xml:space="preserve">
+    <value>Dokumen Bukti</value>
+  </data>
+  <data name="ColumnStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ColumnActions" xml:space="preserve">
+    <value>Tindakan</value>
+  </data>
+  <data name="ViewProofButton" xml:space="preserve">
+    <value>Lihat Bukti</value>
+  </data>
+  <data name="StatusApproved" xml:space="preserve">
+    <value>Diluluskan</value>
+  </data>
+  <data name="StatusRejected" xml:space="preserve">
+    <value>Ditolak</value>
+  </data>
+  <data name="StatusPending" xml:space="preserve">
+    <value>Dalam Proses</value>
+  </data>
+  <data name="ActionApprove" xml:space="preserve">
+    <value>Lulus</value>
+  </data>
+  <data name="ActionReject" xml:space="preserve">
+    <value>Tolak</value>
+  </data>
+  <data name="NoRecordsFound" xml:space="preserve">
+    <value>Tiada rekod ahli ditemui mengikut tapisan semasa anda.</value>
+  </data>
+</root>

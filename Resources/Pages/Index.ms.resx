@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- Page Title & Hero Section -->
+  <data name="PageTitle" xml:space="preserve">
+    <value>Utama</value>
+  </data>
+  <data name="HeroTitle" xml:space="preserve">
+    <value>Selamat Datang ke Portal Komuniti Masjid</value>
+  </data>
+  <data name="HeroSubtitle" xml:space="preserve">
+    <value>Pendaftaran rasmi penduduk dan direktori perkhidmatan komuniti untuk ahli kariah tempatan.</value>
+  </data>
+  <data name="RegisterAccount" xml:space="preserve">
+    <value>Daftar Akaun</value>
+  </data>
+  <data name="MemberLogin" xml:space="preserve">
+    <value>Log Masuk Ahli</value>
+  </data>
+  <data name="GoToDashboard" xml:space="preserve">
+    <value>Ke Papan Pemuka</value>
+  </data>
+
+  <!-- Feature Card 1: Official Registration -->
+  <data name="FeatureRegistrationTitle" xml:space="preserve">
+    <value>Pendaftaran Rasmi</value>
+  </data>
+  <data name="FeatureRegistrationDesc" xml:space="preserve">
+    <value>Daftar sebagai penduduk berdaftar di kariah tempatan untuk menerima maklumat rasmi komuniti dan bantuan kebajikan.</value>
+  </data>
+
+  <!-- Feature Card 2: Verification & Privacy -->
+  <data name="FeatureVerificationTitle" xml:space="preserve">
+    <value>Pengesahan &amp; Privasi</value>
+  </data>
+  <data name="FeatureVerificationDesc" xml:space="preserve">
+    <value>Bukti kediaman dan maklumat identiti anda disemak serta disimpan secara selamat oleh pentadbir jawatankuasa masjid.</value>
+  </data>
+
+  <!-- Feature Card 3: Member Portal -->
+  <data name="FeaturePortalTitle" xml:space="preserve">
+    <value>Portal Ahli</value>
+  </data>
+  <data name="FeaturePortalDesc" xml:space="preserve">
+    <value>Akses status profil peribadi, semak pengesahan dokumen yang dihantar, dan urus maklumat akaun anda pada bila-bila masa.</value>
+  </data>
+</root>
