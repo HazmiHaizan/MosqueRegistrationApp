@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MosqueRegistrationApp.Models;
 
 namespace MosqueRegistrationApp.Pages.Admin
@@ -59,6 +60,14 @@ namespace MosqueRegistrationApp.Pages.Admin
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid) return Page();
+
+            // Validate that no other user has this IC Number
+            bool icExists = await _userManager.Users.AnyAsync(u => u.IcNumber == Input.IcNumber && u.Id != Input.Id);
+            if (icExists)
+            {
+                ModelState.AddModelError("Input.IcNumber", "Another account with this IC Number already exists.");
+                return Page();
+            }
 
             var user = await _userManager.FindByIdAsync(Input.Id);
             if (user == null) return NotFound();

@@ -7,44 +7,52 @@
     ViewData["Title"] = Localizer["PageTitle"]; 
 }
 
-<div class="row justify-content-center my-5">
-    <div class="col-md-6 col-lg-5">
-        <div class="card card-custom shadow-sm">
-            <div class="card-header card-header-emerald text-center py-3">
-                <h4 class="mb-0 fw-bold"><i class="bi bi-box-arrow-in-right text-gold me-2"></i>@Localizer["CardHeaderTitle"]</h4>
-                <small class="text-white-50">@Localizer["CardHeaderSubtitle"]</small>
+<!-- Reduced top/bottom margin on mobile (my-3) vs desktop (my-sm-5) -->
+<div class="row justify-content-center my-3 my-sm-5 px-2 px-sm-0">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-5">
+        <div class="card card-custom shadow-sm border-0">
+            <!-- Header with responsive padding & header sizing -->
+            <div class="card-header card-header-emerald text-center py-3 px-3">
+                <h4 class="mb-1 fw-bold fs-5 fs-sm-4"><i class="bi bi-box-arrow-in-right text-gold me-2"></i>@Localizer["CardHeaderTitle"]</h4>
+                <small class="text-white-50 d-block lh-sm">@Localizer["CardHeaderSubtitle"]</small>
             </div>
-            <div class="card-body p-4">
+            
+            <!-- Adaptive card body padding -->
+            <div class="card-body p-3 p-sm-4">
                 <form method="post">
                     <div asp-validation-summary="All" class="text-danger mb-3 small"></div>
 
                     <div class="mb-3">
-                        <label asp-for="Input.Username" class="form-label fw-semibold">@Localizer["UsernameLabel"]</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light text-muted"><i class="bi bi-person"></i></span>
-                            <input asp-for="Input.Username" class="form-control" placeholder="@Localizer["UsernamePlaceholder"]" required />
+                        <label asp-for="Input.Username" class="form-label fw-semibold fs-6">@Localizer["UsernameLabel"]</label>
+                        <!-- Added form-control-lg / input-group-lg for 48px touch targets & prevents iOS input zoom -->
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light text-muted px-3"><i class="bi bi-person fs-5"></i></span>
+                            <input asp-for="Input.Username" class="form-control fs-6" placeholder="@Localizer["UsernamePlaceholder"]" required autocomplete="username" />
                         </div>
                     </div>
 
                     <div class="mb-4">
-                        <label asp-for="Input.Password" class="form-label fw-semibold">@Localizer["PasswordLabel"]</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light text-muted"><i class="bi bi-lock"></i></span>
-                            <input asp-for="Input.Password" type="password" class="form-control" placeholder="@Localizer["PasswordPlaceholder"]" required />
+                        <label asp-for="Input.Password" class="form-label fw-semibold fs-6">@Localizer["PasswordLabel"]</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light text-muted px-3"><i class="bi bi-lock fs-5"></i></span>
+                            <input asp-for="Input.Password" type="password" class="form-control fs-6" placeholder="@Localizer["PasswordPlaceholder"]" required autocomplete="current-password" />
                         </div>
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-gold py-2 fw-bold text-uppercase shadow-sm">
+                        <!-- Full-width, prominent 48px submit button for mobile thumb taps -->
+                        <button type="submit" class="btn btn-gold btn-lg py-2.5 fw-bold text-uppercase shadow-sm fs-6">
                             <i class="bi bi-door-open-fill me-1"></i> @Localizer["LogInButton"]
                         </button>
                     </div>
                 </form>
             </div>
-            <div class="card-footer bg-light text-center py-3 border-top-0">
-                <small class="text-muted">
+            
+            <!-- Touch-friendly footer link -->
+            <div class="card-footer bg-light text-center py-3 px-3 border-top-0">
+                <small class="text-muted d-block fs-6">
                     @Localizer["NoAccountText"] 
-                    <a asp-page="/Account/Register" class="fw-bold" style="color: var(--primary-emerald);">@Localizer["RegisterHereLink"]</a>
+                    <a asp-page="/Account/Register" class="fw-bold d-inline-block mt-1 mt-sm-0 py-1" style="color: var(--primary-emerald);">@Localizer["RegisterHereLink"]</a>
                 </small>
             </div>
         </div>

@@ -7,18 +7,19 @@
     ViewData["Title"] = Localizer["PageTitle"]; 
 }
 
-<div class="row align-items-center mb-4">
-    <div class="col-md-8">
-        <h2 class="fw-bold mb-1" style="color: var(--primary-emerald);">
+<!-- Header & Export Action -->
+<div class="row align-items-center mb-3 mb-md-4 g-2">
+    <div class="col-12 col-md-8">
+        <h2 class="fw-bold mb-1 fs-4 fs-md-2" style="color: var(--primary-emerald);">
             <i class="bi bi-shield-check text-gold me-2"></i>@Localizer["PortalTitle"]
         </h2>
-        <p class="text-muted mb-0">@Localizer["PortalDescription"]</p>
+        <p class="text-muted mb-0 small fs-6">@Localizer["PortalDescription"]</p>
     </div>
-    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+    <div class="col-12 col-md-4 text-md-end mt-2 mt-md-0">
         <form method="post" asp-page-handler="ExportCsv">
             <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
             <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-            <button type="submit" class="btn btn-gold shadow-sm">
+            <button type="submit" class="btn btn-gold shadow-sm w-100 w-md-auto py-2">
                 <i class="bi bi-file-earmark-spreadsheet me-1"></i> @Localizer["ExportCsvButton"]
             </button>
         </form>
@@ -26,54 +27,56 @@
 </div>
 
 <!-- Search & Filter Card -->
-<div class="card card-custom p-3 mb-4">
-    <form method="get" class="row g-3">
-        <div class="col-md-6">
-            <div class="input-group">
+<div class="card card-custom p-3 mb-3 mb-md-4 shadow-sm border-0">
+    <form method="get" class="row g-2 g-md-3">
+        <div class="col-12 col-md-6">
+            <div class="input-group input-group-lg-mobile">
                 <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
                 <input type="text" 
                        asp-for="SearchTerm" 
-                       class="form-control border-start-0" 
+                       class="form-control border-start-0 fs-6" 
                        placeholder="@Localizer["SearchPlaceholder"]" />
             </div>
         </div>
-        <div class="col-md-3">
-            <select asp-for="StatusFilter" class="form-select">
+        <div class="col-12 col-md-3">
+            <select asp-for="StatusFilter" class="form-select fs-6">
                 <option value="All">@Localizer["FilterAllStatuses"]</option>
                 <option value="Pending">@Localizer["FilterPending"]</option>
                 <option value="Approved">@Localizer["FilterApproved"]</option>
                 <option value="Rejected">@Localizer["FilterRejected"]</option>
             </select>
         </div>
-        <div class="col-md-3 d-flex gap-2">
-            <button type="submit" class="btn btn-emerald flex-grow-1">@Localizer["FilterButton"]</button>
-            <a asp-page="/Admin/Dashboard" class="btn btn-outline-secondary">@Localizer["ResetButton"]</a>
+        <div class="col-12 col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-emerald flex-grow-1 py-2 fs-6">@Localizer["FilterButton"]</button>
+            <a asp-page="/Admin/Dashboard" class="btn btn-outline-secondary flex-grow-1 flex-md-grow-0 py-2 fs-6">@Localizer["ResetButton"]</a>
         </div>
     </form>
 </div>
 
-<!-- Member List Table Container -->
-<div class="card card-custom overflow-hidden">
-    <div class="card-header card-header-emerald d-flex justify-content-between align-items-center py-3">
-        <h5 class="mb-0 fw-semibold"><i class="bi bi-people me-2"></i>@Localizer["TableHeaderTitle"]</h5>
-        <span class="badge bg-white text-dark fw-bold">@Localizer["TotalLabel"]: @(Model.RegisteredUsers?.Count ?? 0)</span>
+<!-- Member Directory Container -->
+<div class="card card-custom overflow-hidden shadow-sm border-0 mb-4">
+    <div class="card-header card-header-emerald d-flex justify-content-between align-items-center py-3 px-3">
+        <h5 class="mb-0 fw-semibold fs-6 fs-md-5"><i class="bi bi-people me-2"></i>@Localizer["TableHeaderTitle"]</h5>
+        <span class="badge bg-white text-dark fw-bold px-2 py-1 fs-7">@Localizer["TotalLabel"]: @(Model.RegisteredUsers?.Count ?? 0)</span>
     </div>
+    
     <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-custom align-middle mb-0">
-                <thead>
-                    <tr>
-                        <th class="ps-3">@Localizer["ColumnFullName"]</th>
-                        <th>@Localizer["ColumnIcNumber"]</th>
-                        <th>@Localizer["ColumnAddress"]</th>
-                        <th>@Localizer["ColumnProofDocument"]</th>
-                        <th>@Localizer["ColumnStatus"]</th>
-                        <th class="text-end pe-3">@Localizer["ColumnActions"]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.RegisteredUsers != null && Model.RegisteredUsers.Count > 0)
-                    {
+        @if (Model.RegisteredUsers != null && Model.RegisteredUsers.Count > 0)
+        {
+            <!-- 1. DESKTOP VIEW: Data Table (visible on medium screens and up) -->
+            <div class="table-responsive d-none d-md-block">
+                <table class="table table-custom align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-3">@Localizer["ColumnFullName"]</th>
+                            <th>@Localizer["ColumnIcNumber"]</th>
+                            <th>@Localizer["ColumnAddress"]</th>
+                            <th>@Localizer["ColumnProofDocument"]</th>
+                            <th>@Localizer["ColumnStatus"]</th>
+                            <th class="text-end pe-3">@Localizer["ColumnActions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach (var user in Model.RegisteredUsers)
                         {
                             <tr>
@@ -103,14 +106,14 @@
                                     }
                                 </td>
                                 <td class="text-end pe-3">
-                                    <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
+                                    <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
                                         <input type="hidden" name="userId" value="@user.Id" />
                                         <input type="hidden" name="status" value="Approved" />
                                         <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
                                         <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
                                         <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">@Localizer["ActionApprove"]</button>
                                     </form>
-                                    <form method="post" asp-page-handler="UpdateStatus" style="display:inline;">
+                                    <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
                                         <input type="hidden" name="userId" value="@user.Id" />
                                         <input type="hidden" name="status" value="Rejected" />
                                         <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
@@ -120,18 +123,79 @@
                                 </td>
                             </tr>
                         }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="6" class="text-center py-4 text-muted">
-                                <i class="bi bi-inbox display-6 d-block mb-2"></i>
-                                @Localizer["NoRecordsFound"]
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 2. MOBILE VIEW: Stacked Cards List (visible on mobile screens) -->
+            <div class="d-md-none p-2">
+                @foreach (var user in Model.RegisteredUsers)
+                {
+                    <div class="card mb-2 border shadow-sm rounded-3">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark">@user.FullName</h6>
+                                    <small class="text-muted"><code class="fs-7">@user.IcNumber</code></small>
+                                </div>
+                                <div>
+                                    @if (user.ApprovalStatus == "Approved")
+                                    {
+                                        <span class="badge-approved small"><i class="bi bi-check-circle me-1"></i> @Localizer["StatusApproved"]</span>
+                                    }
+                                    else if (user.ApprovalStatus == "Rejected")
+                                    {
+                                        <span class="badge-rejected small"><i class="bi bi-x-circle me-1"></i> @Localizer["StatusRejected"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-pending small"><i class="bi bi-hourglass-split me-1"></i> @Localizer["StatusPending"]</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <p class="small text-muted mb-2"><i class="bi bi-geo-alt me-1"></i>@user.CurrentAddress</p>
+
+                            @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
+                            {
+                                <div class="mb-3">
+                                    <a href="@user.ProofOfResidencyImagePath" target="_blank" class="btn btn-sm btn-outline-success rounded-pill w-100 py-1">
+                                        <i class="bi bi-file-image me-1"></i> @Localizer["ViewProofButton"]
+                                    </a>
+                                </div>
+                            }
+
+                            <div class="d-flex gap-2 pt-2 border-top">
+                                <form method="post" asp-page-handler="UpdateStatus" class="flex-grow-1">
+                                    <input type="hidden" name="userId" value="@user.Id" />
+                                    <input type="hidden" name="status" value="Approved" />
+                                    <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                    <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                    <button type="submit" class="btn btn-sm btn-success rounded-pill w-100 py-2 fw-semibold">
+                                        <i class="bi bi-check-lg me-1"></i>@Localizer["ActionApprove"]
+                                    </button>
+                                </form>
+                                <form method="post" asp-page-handler="UpdateStatus" class="flex-grow-1">
+                                    <input type="hidden" name="userId" value="@user.Id" />
+                                    <input type="hidden" name="status" value="Rejected" />
+                                    <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                    <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill w-100 py-2 fw-semibold">
+                                        <i class="bi bi-x-lg me-1"></i>@Localizer["ActionReject"]
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-4 px-3 text-muted">
+                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                <p class="mb-0 fs-6">@Localizer["NoRecordsFound"]</p>
+            </div>
+        }
     </div>
 </div>

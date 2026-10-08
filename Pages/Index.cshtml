@@ -9,50 +9,64 @@
 
 <!-- Hero Section -->
 <div class="card card-custom overflow-hidden mb-4 border-0 text-white" style="background: linear-gradient(135deg, var(--emerald-dark) 0%, var(--primary-emerald) 100%); border-bottom: 3px solid var(--accent-gold) !important;">
-    <div class="card-body p-4 p-md-5 text-center">
-        <h1 class="display-5 fw-bold mb-2">@Localizer["HeroTitle"]</h1>
-        <p class="lead text-white-50 mb-4">@Localizer["HeroSubtitle"]</p>
+    <div class="card-body px-3 py-4 p-sm-4 p-md-5 text-center">
+        <!-- Responsive Typography: fs-2 on mobile, display-5 on desktop -->
+        <h1 class="fs-2 fs-md-1 display-md-5 fw-bold mb-2">@Localizer["HeroTitle"]</h1>
+        <p class="lead-mobile fs-6 fs-md-5 text-white-50 mb-4 px-2">@Localizer["HeroSubtitle"]</p>
         
         @if (!User.Identity.IsAuthenticated)
-        {
-            <div class="d-flex justify-content-center gap-3">
-                <a asp-page="/Account/Register" class="btn btn-gold btn-lg rounded-pill px-4 shadow-sm">
-                    <i class="bi bi-person-plus-fill me-2"></i>@Localizer["RegisterAccount"]
-                </a>
-                <a asp-page="/Account/Login" class="btn btn-outline-light btn-lg rounded-pill px-4">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>@Localizer["MemberLogin"]
-                </a>
-            </div>
-        }
-        else
-        {
-            <a asp-page="/User/Dashboard" class="btn btn-gold btn-lg rounded-pill px-4 shadow-sm">
-                <i class="bi bi-speedometer2 me-2"></i>@Localizer["GoToDashboard"]
-            </a>
-        }
+            {
+                <!-- Inline flex layout with wrap for small screens -->
+                <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+                    <a asp-page="/Account/Register" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
+                        <i class="bi bi-person-plus-fill me-2 fs-5"></i>@Localizer["RegisterAccount"]
+                    </a>
+                    <a asp-page="/Account/Login" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold text-nowrap d-inline-flex align-items-center justify-content-center">
+                        <i class="bi bi-box-arrow-in-right me-2 fs-5"></i>@Localizer["MemberLogin"]
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-center">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-page="/Admin/Dashboard" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
+                            <i class="bi bi-speedometer2 me-2 fs-5"></i>@Localizer["GoToDashboard"]
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-page="/User/Dashboard" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
+                            <i class="bi bi-speedometer2 me-2 fs-5"></i>@Localizer["GoToDashboard"]
+                        </a>
+                    }
+                </div>
+            }
     </div>
 </div>
 
 <!-- Quick Feature Cards -->
-<div class="row g-4 mb-4">
-    <div class="col-md-4">
-        <div class="card card-custom h-100 p-4 text-center">
-            <div class="display-6 text-gold mb-3"><i class="bi bi-card-checklist"></i></div>
-            <h5 class="fw-bold" style="color: var(--primary-emerald);">@Localizer["FeatureRegistrationTitle"]</h5>
+<!-- Grid gap: g-3 on mobile, g-4 on desktop -->
+<div class="row g-3 g-md-4 mb-4">
+    <div class="col-12 col-md-4">
+        <div class="card card-custom h-100 p-3 p-sm-4 text-center">
+            <div class="fs-1 text-gold mb-2 mb-sm-3"><i class="bi bi-card-checklist"></i></div>
+            <h5 class="fw-bold fs-6 fs-sm-5" style="color: var(--primary-emerald);">@Localizer["FeatureRegistrationTitle"]</h5>
             <p class="text-muted small mb-0">@Localizer["FeatureRegistrationDesc"]</p>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card card-custom h-100 p-4 text-center">
-            <div class="display-6 text-gold mb-3"><i class="bi bi-shield-check"></i></div>
-            <h5 class="fw-bold" style="color: var(--primary-emerald);">@Localizer["FeatureVerificationTitle"]</h5>
+    <div class="col-12 col-md-4">
+        <div class="card card-custom h-100 p-3 p-sm-4 text-center">
+            <div class="fs-1 text-gold mb-2 mb-sm-3"><i class="bi bi-shield-check"></i></div>
+            <h5 class="fw-bold fs-6 fs-sm-5" style="color: var(--primary-emerald);">@Localizer["FeatureVerificationTitle"]</h5>
             <p class="text-muted small mb-0">@Localizer["FeatureVerificationDesc"]</p>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card card-custom h-100 p-4 text-center">
-            <div class="display-6 text-gold mb-3"><i class="bi bi-person-badge"></i></div>
-            <h5 class="fw-bold" style="color: var(--primary-emerald);">@Localizer["FeaturePortalTitle"]</h5>
+    <div class="col-12 col-md-4">
+        <div class="card card-custom h-100 p-3 p-sm-4 text-center">
+            <div class="fs-1 text-gold mb-2 mb-sm-3"><i class="bi bi-person-badge"></i></div>
+            <h5 class="fw-bold fs-6 fs-sm-5" style="color: var(--primary-emerald);">@Localizer["FeaturePortalTitle"]</h5>
             <p class="text-muted small mb-0">@Localizer["FeaturePortalDesc"]</p>
         </div>
     </div>

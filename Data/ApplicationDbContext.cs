@@ -10,5 +10,15 @@ namespace MosqueRegistrationApp.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // Enforce unique index constraint on IC Number at the database level
+            builder.Entity<ApplicationUser>()
+                .HasIndex(u => u.IcNumber)
+                .IsUnique();
+        }
     }
 }

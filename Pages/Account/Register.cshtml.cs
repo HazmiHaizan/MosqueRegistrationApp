@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MosqueRegistrationApp.Models;
 
 namespace MosqueRegistrationApp.Pages.Account
@@ -41,6 +42,14 @@ namespace MosqueRegistrationApp.Pages.Account
         {
             if (!ModelState.IsValid) return Page();
 
+            // Validate IC Number uniqueness
+            bool icExists = await _userManager.Users.AnyAsync(u => u.IcNumber == Input.IcNumber);
+            if (icExists)
+            {
+                ModelState.AddModelError("Input.IcNumber", "An account with this IC Number is already registered.");
+                return Page();
+            }
+
             string imagePath = null;
             if (Input.ProofOfResidency != null && Input.ProofOfResidency.Length > 0)
             {
@@ -66,7 +75,7 @@ namespace MosqueRegistrationApp.Pages.Account
                 MaritalStatus = Input.MaritalStatus,
                 ResidencyDurationYears = Input.ResidencyDurationYears,
                 ProofOfResidencyImagePath = imagePath,
-                ApprovalStatus = "Pending" // Explicitly set default status
+                ApprovalStatus = "Pending"
             };
 
             var result = await _userManager.CreateAsync(user, Input.Password);
