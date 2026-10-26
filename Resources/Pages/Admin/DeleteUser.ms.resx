@@ -37,4 +37,7 @@
   <data name="CancelButton" xml:space="preserve">
     <value>Batal</value>
   </data>
+  <data name="ErrorCannotDeleteSelf" xml:space="preserve">
+    <value>Anda tidak boleh memadam akaun pentadbir anda sendiri.</value>
+  </data>
 </root>

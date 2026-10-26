@@ -106,6 +106,7 @@
                                     }
                                 </td>
                                 <td class="text-end pe-3">
+                                    <!-- Approve Button -->
                                     <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
                                         <input type="hidden" name="userId" value="@user.Id" />
                                         <input type="hidden" name="status" value="Approved" />
@@ -113,6 +114,8 @@
                                         <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
                                         <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">@Localizer["ActionApprove"]</button>
                                     </form>
+
+                                    <!-- Reject Button -->
                                     <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
                                         <input type="hidden" name="userId" value="@user.Id" />
                                         <input type="hidden" name="status" value="Rejected" />
@@ -120,6 +123,16 @@
                                         <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">@Localizer["ActionReject"]</button>
                                     </form>
+
+                                    <!-- Edit Button -->
+                                    <a asp-page="/Admin/EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                        <i class="bi bi-pencil me-1"></i>@Localizer["ActionEdit"]
+                                    </a>
+
+                                    <!-- Delete Button -->
+                                    <a asp-page="/Admin/DeleteUser" asp-route-id="@user.Id" class="btn btn-sm btn-danger rounded-pill px-3">
+                                        <i class="bi bi-trash me-1"></i>@Localizer["ActionDelete"]
+                                    </a>
                                 </td>
                             </tr>
                         }
@@ -165,7 +178,7 @@
                                 </div>
                             }
 
-                            <div class="d-flex gap-2 pt-2 border-top">
+                            <div class="d-flex flex-wrap gap-2 pt-2 border-top">
                                 <form method="post" asp-page-handler="UpdateStatus" class="flex-grow-1">
                                     <input type="hidden" name="userId" value="@user.Id" />
                                     <input type="hidden" name="status" value="Approved" />
@@ -184,6 +197,12 @@
                                         <i class="bi bi-x-lg me-1"></i>@Localizer["ActionReject"]
                                     </button>
                                 </form>
+                                <a asp-page="/Admin/EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-outline-secondary rounded-pill flex-grow-1 py-2 text-center fw-semibold">
+                                    <i class="bi bi-pencil me-1"></i>@Localizer["ActionEdit"]
+                                </a>
+                                <a asp-page="/Admin/DeleteUser" asp-route-id="@user.Id" class="btn btn-sm btn-danger rounded-pill flex-grow-1 py-2 text-center fw-semibold">
+                                    <i class="bi bi-trash me-1"></i>@Localizer["ActionDelete"]
+                                </a>
                             </div>
                         </div>
                     </div>

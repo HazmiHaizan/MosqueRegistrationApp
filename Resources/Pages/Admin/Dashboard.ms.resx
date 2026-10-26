@@ -91,4 +91,10 @@
   <data name="NoRecordsFound" xml:space="preserve">
     <value>Tiada rekod ahli ditemui mengikut tapisan semasa anda.</value>
   </data>
+  <data name="ActionDelete" xml:space="preserve">
+    <value>Padam</value>
+  </data>
+  <data name="ActionEdit" xml:space="preserve">
+    <value>Kemaskini</value>
+  </data>
 </root>

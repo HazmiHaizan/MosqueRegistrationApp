@@ -91,4 +91,10 @@
   <data name="NoRecordsFound" xml:space="preserve">
     <value>No member records found matching your current filters.</value>
   </data>
+  <data name="ActionDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ActionEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>

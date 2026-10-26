@@ -37,4 +37,7 @@
   <data name="CancelButton" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="ErrorCannotDeleteSelf" xml:space="preserve">
+    <value>You cannot delete your own admin account.</value>
+  </data>
 </root>
