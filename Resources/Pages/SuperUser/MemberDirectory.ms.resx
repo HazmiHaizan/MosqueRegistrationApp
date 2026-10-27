@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Direktori Ahli</value>
+  </data>
+  <data name="PortalTitle" xml:space="preserve">
+    <value>Direktori Ahli</value>
+  </data>
+  <data name="PortalDescription" xml:space="preserve">
+    <value>Lihat senarai semua ahli kariah yang berdaftar beserta status kelulusan.</value>
+  </data>
+  <data name="TableHeaderTitle" xml:space="preserve">
+    <value>Senarai Ahli Berdaftar</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Cari mengikut Nama atau No. KP...</value>
+  </data>
+  <data name="FilterAllStatuses" xml:space="preserve">
+    <value>Semua Status</value>
+  </data>
+  <data name="FilterPending" xml:space="preserve">
+    <value>Menunggu</value>
+  </data>
+  <data name="FilterApproved" xml:space="preserve">
+    <value>Diluluskan</value>
+  </data>
+  <data name="FilterRejected" xml:space="preserve">
+    <value>Ditolak</value>
+  </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Tapis</value>
+  </data>
+  <data name="ResetButton" xml:space="preserve">
+    <value>Set Semula</value>
+  </data>
+  <data name="TotalLabel" xml:space="preserve">
+    <value>Jumlah</value>
+  </data>
+  <data name="ColumnFullName" xml:space="preserve">
+    <value>Nama Penuh</value>
+  </data>
+  <data name="ColumnIcNumber" xml:space="preserve">
+    <value>No. Kad Pengenalan</value>
+  </data>
+  <data name="ColumnAddress" xml:space="preserve">
+    <value>Alamat Semasa</value>
+  </data>
+  <data name="ColumnMaritalStatus" xml:space="preserve">
+    <value>Status Perkahwinan</value>
+  </data>
+  <data name="ColumnResidencyDuration" xml:space="preserve">
+    <value>Tempoh Menetap (Tahun)</value>
+  </data>
+  <data name="ColumnStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="StatusApproved" xml:space="preserve">
+    <value>Diluluskan</value>
+  </data>
+  <data name="StatusPending" xml:space="preserve">
+    <value>Menunggu</value>
+  </data>
+  <data name="StatusRejected" xml:space="preserve">
+    <value>Ditolak</value>
+  </data>
+  <data name="NoRecordsFound" xml:space="preserve">
+    <value>Tiada rekod dijumpai mengikut kriteria carian anda.</value>
+  </data>
+</root>

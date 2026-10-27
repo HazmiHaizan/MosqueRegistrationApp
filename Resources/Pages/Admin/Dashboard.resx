@@ -97,4 +97,25 @@
   <data name="ActionEdit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="ColumnRole" xml:space="preserve">
+  <value>Role / Tier</value>
+</data>
+<data name="RoleSuperUser" xml:space="preserve">
+  <value>Super User</value>
+</data>
+<data name="RoleUser" xml:space="preserve">
+  <value>Standard User</value>
+</data>
+<data name="ActionMakeSuperUser" xml:space="preserve">
+  <value>Make Super User</value>
+</data>
+<data name="ActionDemoteUser" xml:space="preserve">
+  <value>Demote User</value>
+</data>
+<data name="ConfirmPromote" xml:space="preserve">
+  <value>Upgrade this user to Super User?</value>
+</data>
+<data name="ConfirmDemote" xml:space="preserve">
+  <value>Demote this user to standard user?</value>
+</data>
 </root>

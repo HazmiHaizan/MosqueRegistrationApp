@@ -39,8 +39,14 @@ namespace MosqueRegistrationApp.Pages.Account
                 if (await _userManager.IsInRoleAsync(user, Roles.Admin))
                 {
                     return RedirectToPage("/Admin/Dashboard");
+                }else if (await _userManager.IsInRoleAsync(user, Roles.SuperUser))
+                {
+                    return RedirectToPage("/SuperUser/MemberDirectory");
                 }
-                return RedirectToPage("/User/Dashboard");
+                else
+                {
+                    return RedirectToPage("/User/Dashboard");
+                }
             }
 
             ModelState.AddModelError(string.Empty, "Invalid username or password.");

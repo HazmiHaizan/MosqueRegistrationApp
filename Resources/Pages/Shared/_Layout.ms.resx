@@ -40,4 +40,7 @@
   <data name="FooterRights" xml:space="preserve">
     <value>Portal Pengurusan Komuniti Masjid • HH Creations. Hak cipta terpelihara.</value>
   </data>
+  <data name="MemberDirectory" xml:space="preserve">
+  <value>Direktori Ahli</value>
+</data>
 </root>

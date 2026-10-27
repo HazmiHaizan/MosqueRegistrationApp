@@ -71,32 +71,47 @@
                             <th class="ps-3">@Localizer["ColumnFullName"]</th>
                             <th>@Localizer["ColumnIcNumber"]</th>
                             <th>@Localizer["ColumnAddress"]</th>
+                            <th>Role / Tier</th>
                             <th>@Localizer["ColumnProofDocument"]</th>
                             <th>@Localizer["ColumnStatus"]</th>
                             <th class="text-end pe-3">@Localizer["ColumnActions"]</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var user in Model.RegisteredUsers)
+                        @foreach (var item in Model.RegisteredUsers)
                         {
                             <tr>
-                                <td class="ps-3 fw-medium">@user.FullName</td>
-                                <td><code>@user.IcNumber</code></td>
-                                <td><small class="text-muted">@user.CurrentAddress</small></td>
+                                <td class="ps-3 fw-medium">@item.User.FullName</td>
+                                <td><code>@item.User.IcNumber</code></td>
+                                <td><small class="text-muted">@item.User.CurrentAddress</small></td>
                                 <td>
-                                    @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
+                                    @if (item.IsAdmin)
                                     {
-                                        <a href="@user.ProofOfResidencyImagePath" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">
+                                        <span class="badge bg-danger text-white">Admin</span>
+                                    }
+                                    else if (item.IsSuperUser)
+                                    {
+                                        <span class="badge bg-info text-dark">Super User</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">User</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.User.ProofOfResidencyImagePath))
+                                    {
+                                        <a href="@item.User.ProofOfResidencyImagePath" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">
                                             <i class="bi bi-file-image me-1"></i> @Localizer["ViewProofButton"]
                                         </a>
                                     }
                                 </td>
                                 <td>
-                                    @if (user.ApprovalStatus == "Approved")
+                                    @if (item.User.ApprovalStatus == "Approved")
                                     {
                                         <span class="badge-approved"><i class="bi bi-check-circle me-1"></i> @Localizer["StatusApproved"]</span>
                                     }
-                                    else if (user.ApprovalStatus == "Rejected")
+                                    else if (item.User.ApprovalStatus == "Rejected")
                                     {
                                         <span class="badge-rejected"><i class="bi bi-x-circle me-1"></i> @Localizer["StatusRejected"]</span>
                                     }
@@ -106,33 +121,59 @@
                                     }
                                 </td>
                                 <td class="text-end pe-3">
-                                    <!-- Approve Button -->
-                                    <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
-                                        <input type="hidden" name="userId" value="@user.Id" />
-                                        <input type="hidden" name="status" value="Approved" />
-                                        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                                        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                        <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">@Localizer["ActionApprove"]</button>
-                                    </form>
+                                    @if (!item.IsAdmin)
+                                    {
+                                        <!-- Toggle Super User Button -->
+                                        <form method="post" asp-page-handler="ToggleSuperUser" class="d-inline">
+                                            <input type="hidden" name="userId" value="@item.User.Id" />
+                                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                            @if (item.IsSuperUser)
+                                            {
+                                                <button type="submit" class="btn btn-sm btn-outline-warning rounded-pill px-2.5" onclick="return confirm('Demote this user to standard user?');" title="Demote to User">
+                                                    <i class="bi bi-arrow-down-circle"></i>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit" class="btn btn-sm btn-outline-info rounded-pill px-2.5" onclick="return confirm('Upgrade this user to Super User?');" title="Promote to Super User">
+                                                    <i class="bi bi-arrow-up-circle"></i>
+                                                </button>
+                                            }
+                                        </form>
 
-                                    <!-- Reject Button -->
-                                    <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
-                                        <input type="hidden" name="userId" value="@user.Id" />
-                                        <input type="hidden" name="status" value="Rejected" />
-                                        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                                        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">@Localizer["ActionReject"]</button>
-                                    </form>
+                                        <!-- Approve Button -->
+                                        <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
+                                            <input type="hidden" name="userId" value="@item.User.Id" />
+                                            <input type="hidden" name="status" value="Approved" />
+                                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                            <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">@Localizer["ActionApprove"]</button>
+                                        </form>
 
-                                    <!-- Edit Button -->
-                                    <a asp-page="/Admin/EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                                        <i class="bi bi-pencil me-1"></i>@Localizer["ActionEdit"]
-                                    </a>
+                                        <!-- Reject Button -->
+                                        <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
+                                            <input type="hidden" name="userId" value="@item.User.Id" />
+                                            <input type="hidden" name="status" value="Rejected" />
+                                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">@Localizer["ActionReject"]</button>
+                                        </form>
 
-                                    <!-- Delete Button -->
-                                    <a asp-page="/Admin/DeleteUser" asp-route-id="@user.Id" class="btn btn-sm btn-danger rounded-pill px-3">
-                                        <i class="bi bi-trash me-1"></i>@Localizer["ActionDelete"]
-                                    </a>
+                                        <!-- Edit Button -->
+                                        <a asp-page="/Admin/EditUser" asp-route-id="@item.User.Id" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                            <i class="bi bi-pencil me-1"></i>@Localizer["ActionEdit"]
+                                        </a>
+
+                                        <!-- Delete Button -->
+                                        <a asp-page="/Admin/DeleteUser" asp-route-id="@item.User.Id" class="btn btn-sm btn-danger rounded-pill px-3">
+                                            <i class="bi bi-trash me-1"></i>@Localizer["ActionDelete"]
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small fst-italic">Protected Account</span>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -142,21 +183,30 @@
 
             <!-- 2. MOBILE VIEW: Stacked Cards List (visible on mobile screens) -->
             <div class="d-md-none p-2">
-                @foreach (var user in Model.RegisteredUsers)
+                @foreach (var item in Model.RegisteredUsers)
                 {
                     <div class="card mb-2 border shadow-sm rounded-3">
                         <div class="card-body p-3">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>
-                                    <h6 class="fw-bold mb-0 text-dark">@user.FullName</h6>
-                                    <small class="text-muted"><code class="fs-7">@user.IcNumber</code></small>
+                                    <h6 class="fw-bold mb-0 text-dark">@item.User.FullName</h6>
+                                    <small class="text-muted"><code class="fs-7">@item.User.IcNumber</code></small>
                                 </div>
-                                <div>
-                                    @if (user.ApprovalStatus == "Approved")
+                                <div class="text-end">
+                                    @if (item.IsAdmin)
+                                    {
+                                        <span class="badge bg-danger text-white small mb-1 d-block">Admin</span>
+                                    }
+                                    else if (item.IsSuperUser)
+                                    {
+                                        <span class="badge bg-info text-dark small mb-1 d-block">Super User</span>
+                                    }
+
+                                    @if (item.User.ApprovalStatus == "Approved")
                                     {
                                         <span class="badge-approved small"><i class="bi bi-check-circle me-1"></i> @Localizer["StatusApproved"]</span>
                                     }
-                                    else if (user.ApprovalStatus == "Rejected")
+                                    else if (item.User.ApprovalStatus == "Rejected")
                                     {
                                         <span class="badge-rejected small"><i class="bi bi-x-circle me-1"></i> @Localizer["StatusRejected"]</span>
                                     }
@@ -167,42 +217,68 @@
                                 </div>
                             </div>
 
-                            <p class="small text-muted mb-2"><i class="bi bi-geo-alt me-1"></i>@user.CurrentAddress</p>
+                            <p class="small text-muted mb-2"><i class="bi bi-geo-alt me-1"></i>@item.User.CurrentAddress</p>
 
-                            @if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
+                            @if (!string.IsNullOrEmpty(item.User.ProofOfResidencyImagePath))
                             {
                                 <div class="mb-3">
-                                    <a href="@user.ProofOfResidencyImagePath" target="_blank" class="btn btn-sm btn-outline-success rounded-pill w-100 py-1">
+                                    <a href="@item.User.ProofOfResidencyImagePath" target="_blank" class="btn btn-sm btn-outline-success rounded-pill w-100 py-1">
                                         <i class="bi bi-file-image me-1"></i> @Localizer["ViewProofButton"]
                                     </a>
                                 </div>
                             }
 
                             <div class="d-flex flex-wrap gap-2 pt-2 border-top">
-                                <form method="post" asp-page-handler="UpdateStatus" class="flex-grow-1">
-                                    <input type="hidden" name="userId" value="@user.Id" />
-                                    <input type="hidden" name="status" value="Approved" />
-                                    <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                                    <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                    <button type="submit" class="btn btn-sm btn-success rounded-pill w-100 py-2 fw-semibold">
-                                        <i class="bi bi-check-lg me-1"></i>@Localizer["ActionApprove"]
-                                    </button>
-                                </form>
-                                <form method="post" asp-page-handler="UpdateStatus" class="flex-grow-1">
-                                    <input type="hidden" name="userId" value="@user.Id" />
-                                    <input type="hidden" name="status" value="Rejected" />
-                                    <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                                    <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill w-100 py-2 fw-semibold">
-                                        <i class="bi bi-x-lg me-1"></i>@Localizer["ActionReject"]
-                                    </button>
-                                </form>
-                                <a asp-page="/Admin/EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-outline-secondary rounded-pill flex-grow-1 py-2 text-center fw-semibold">
-                                    <i class="bi bi-pencil me-1"></i>@Localizer["ActionEdit"]
-                                </a>
-                                <a asp-page="/Admin/DeleteUser" asp-route-id="@user.Id" class="btn btn-sm btn-danger rounded-pill flex-grow-1 py-2 text-center fw-semibold">
-                                    <i class="bi bi-trash me-1"></i>@Localizer["ActionDelete"]
-                                </a>
+                                @if (!item.IsAdmin)
+                                {
+                                    <!-- Mobile Toggle Super User -->
+                                    <form method="post" asp-page-handler="ToggleSuperUser" class="w-100">
+                                        <input type="hidden" name="userId" value="@item.User.Id" />
+                                        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                        @if (item.IsSuperUser)
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-outline-warning rounded-pill w-100 py-1.5 fw-semibold" onclick="return confirm('Demote this user to standard user?');">
+                                                <i class="bi bi-arrow-down-circle me-1"></i> Demote to Standard User
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-sm btn-outline-info rounded-pill w-100 py-1.5 fw-semibold" onclick="return confirm('Upgrade this user to Super User?');">
+                                                <i class="bi bi-arrow-up-circle me-1"></i> Make Super User
+                                            </button>
+                                        }
+                                    </form>
+
+                                    <form method="post" asp-page-handler="UpdateStatus" class="flex-grow-1">
+                                        <input type="hidden" name="userId" value="@item.User.Id" />
+                                        <input type="hidden" name="status" value="Approved" />
+                                        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                        <button type="submit" class="btn btn-sm btn-success rounded-pill w-100 py-2 fw-semibold">
+                                            <i class="bi bi-check-lg me-1"></i>@Localizer["ActionApprove"]
+                                        </button>
+                                    </form>
+                                    <form method="post" asp-page-handler="UpdateStatus" class="flex-grow-1">
+                                        <input type="hidden" name="userId" value="@item.User.Id" />
+                                        <input type="hidden" name="status" value="Rejected" />
+                                        <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                        <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill w-100 py-2 fw-semibold">
+                                            <i class="bi bi-x-lg me-1"></i>@Localizer["ActionReject"]
+                                        </button>
+                                    </form>
+                                    <a asp-page="/Admin/EditUser" asp-route-id="@item.User.Id" class="btn btn-sm btn-outline-secondary rounded-pill flex-grow-1 py-2 text-center fw-semibold">
+                                        <i class="bi bi-pencil me-1"></i>@Localizer["ActionEdit"]
+                                    </a>
+                                    <a asp-page="/Admin/DeleteUser" asp-route-id="@item.User.Id" class="btn btn-sm btn-danger rounded-pill flex-grow-1 py-2 text-center fw-semibold">
+                                        <i class="bi bi-trash me-1"></i>@Localizer["ActionDelete"]
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted small fst-italic w-100 text-center py-1">Protected Admin Account</span>
+                                }
                             </div>
                         </div>
                     </div>

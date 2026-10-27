@@ -97,4 +97,25 @@
   <data name="ActionEdit" xml:space="preserve">
     <value>Kemaskini</value>
   </data>
+  <data name="ColumnRole" xml:space="preserve">
+  <value>Peranan / Akses</value>
+</data>
+<data name="RoleSuperUser" xml:space="preserve">
+  <value>Pengguna Utama</value>
+</data>
+<data name="RoleUser" xml:space="preserve">
+  <value>Pengguna Biasa</value>
+</data>
+<data name="ActionMakeSuperUser" xml:space="preserve">
+  <value>Jadikan Pengguna Utama</value>
+</data>
+<data name="ActionDemoteUser" xml:space="preserve">
+  <value>Turunkan Akses</value>
+</data>
+<data name="ConfirmPromote" xml:space="preserve">
+  <value>Naik naik taraf pengguna ini kepada Pengguna Utama?</value>
+</data>
+<data name="ConfirmDemote" xml:space="preserve">
+  <value>Turunkan taraf pengguna ini kepada Pengguna Biasa?</value>
+</data>
 </root>

@@ -1,0 +1,186 @@
+@page
+@model MosqueRegistrationApp.Pages.SuperUser.MemberDirectoryModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{ 
+    ViewData["Title"] = "Member Directory"; 
+}
+
+<!-- Header -->
+<div class="row align-items-center mb-3 mb-md-4 g-2">
+    <div class="col-12">
+        <h2 class="fw-bold mb-1 fs-4 fs-md-2" style="color: var(--primary-emerald);">
+            <i class="bi bi-people-fill text-gold me-2"></i>Member Directory & My Profile
+        </h2>
+        <p class="text-muted mb-0 small fs-6">View your personal account information and browse registered mosque members.</p>
+    </div>
+</div>
+
+<!-- Super User's Own Profile Summary Card -->
+@if (Model.CurrentUserProfile != null)
+{
+    <div class="card card-custom border-0 shadow-sm mb-4 bg-light">
+        <div class="card-header bg-white border-bottom py-2.5 px-3 d-flex justify-content-between align-items-center">
+            <span class="fw-bold text-dark fs-6">
+                <i class="bi bi-person-badge text-gold me-2"></i> My Personal Profile Information
+            </span>
+            <span class="badge bg-info text-dark">Super User Account</span>
+        </div>
+        <div class="card-body p-3 p-sm-4">
+            <div class="row g-3">
+                <div class="col-12 col-md-4">
+                    <small class="text-muted d-block">Full Name</small>
+                    <span class="fw-semibold text-dark">@Model.CurrentUserProfile.FullName</span>
+                </div>
+                <div class="col-12 col-md-4">
+                    <small class="text-muted d-block">IC Number</small>
+                    <code>@Model.CurrentUserProfile.IcNumber</code>
+                </div>
+                <div class="col-12 col-md-4">
+                    <small class="text-muted d-block">Approval Status</small>
+                    <span class="badge @(Model.CurrentUserProfile.ApprovalStatus == "Approved" ? "bg-success" : "bg-warning text-dark")">
+                        @Model.CurrentUserProfile.ApprovalStatus
+                    </span>
+                </div>
+                <div class="col-12 col-md-6">
+                    <small class="text-muted d-block">Current Address</small>
+                    <span>@Model.CurrentUserProfile.CurrentAddress</span>
+                </div>
+                <div class="col-12 col-md-3">
+                    <small class="text-muted d-block">Marital Status</small>
+                    <span>@Model.CurrentUserProfile.MaritalStatus</span>
+                </div>
+                <div class="col-12 col-md-3">
+                    <small class="text-muted d-block">Residency Duration</small>
+                    <span>@Model.CurrentUserProfile.ResidencyDurationYears years</span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Search & Filter Card -->
+<div class="card card-custom p-3 mb-3 mb-md-4 shadow-sm border-0">
+    <form method="get" class="row g-2 g-md-3">
+        <div class="col-12 col-md-6">
+            <div class="input-group input-group-lg-mobile">
+                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" 
+                       asp-for="SearchTerm" 
+                       class="form-control border-start-0 fs-6" 
+                       placeholder="Search by Name or IC Number..." />
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <select asp-for="StatusFilter" class="form-select fs-6">
+                <option value="All">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+        <div class="col-12 col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-emerald flex-grow-1 py-2 fs-6">Filter</button>
+            <a asp-page="/SuperUser/MemberDirectory" class="btn btn-outline-secondary flex-grow-1 flex-md-grow-0 py-2 fs-6">Reset</a>
+        </div>
+    </form>
+</div>
+
+<!-- Member Directory Container -->
+<div class="card card-custom overflow-hidden shadow-sm border-0 mb-4">
+    <div class="card-header card-header-emerald d-flex justify-content-between align-items-center py-3 px-3">
+        <h5 class="mb-0 fw-semibold fs-6 fs-md-5"><i class="bi bi-people me-2"></i>Registered Members Directory</h5>
+        <span class="badge bg-white text-dark fw-bold px-2 py-1 fs-7">Total: @(Model.RegisteredUsers?.Count ?? 0)</span>
+    </div>
+    
+    <div class="card-body p-0">
+        @if (Model.RegisteredUsers != null && Model.RegisteredUsers.Count > 0)
+        {
+            <!-- DESKTOP VIEW: Data Table -->
+            <div class="table-responsive d-none d-md-block">
+                <table class="table table-custom align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-3">Full Name</th>
+                            <th>IC Number</th>
+                            <th>Address</th>
+                            <th>Marital Status</th>
+                            <th>Residency (Years)</th>
+                            <th class="text-end pe-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model.RegisteredUsers)
+                        {
+                            <tr>
+                                <td class="ps-3 fw-medium">@user.FullName</td>
+                                <td><code>@user.IcNumber</code></td>
+                                <td><small class="text-muted">@user.CurrentAddress</small></td>
+                                <td>@user.MaritalStatus</td>
+                                <td>@user.ResidencyDurationYears yrs</td>
+                                <td class="text-end pe-3">
+                                    @if (user.ApprovalStatus == "Approved")
+                                    {
+                                        <span class="badge-approved"><i class="bi bi-check-circle me-1"></i> Approved</span>
+                                    }
+                                    else if (user.ApprovalStatus == "Rejected")
+                                    {
+                                        <span class="badge-rejected"><i class="bi bi-x-circle me-1"></i> Rejected</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- MOBILE VIEW: Stacked Cards List -->
+            <div class="d-md-none p-2">
+                @foreach (var user in Model.RegisteredUsers)
+                {
+                    <div class="card mb-2 border shadow-sm rounded-3">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark">@user.FullName</h6>
+                                    <small class="text-muted"><code class="fs-7">@user.IcNumber</code></small>
+                                </div>
+                                <div>
+                                    @if (user.ApprovalStatus == "Approved")
+                                    {
+                                        <span class="badge-approved small"><i class="bi bi-check-circle me-1"></i> Approved</span>
+                                    }
+                                    else if (user.ApprovalStatus == "Rejected")
+                                    {
+                                        <span class="badge-rejected small"><i class="bi bi-x-circle me-1"></i> Rejected</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-pending small"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <p class="small text-muted mb-1"><i class="bi bi-geo-alt me-1"></i>@user.CurrentAddress</p>
+                            <p class="small text-muted mb-0">
+                                <i class="bi bi-heart me-1"></i>@user.MaritalStatus | <i class="bi bi-calendar-check me-1"></i>@user.ResidencyDurationYears years residency
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-4 px-3 text-muted">
+                <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                <p class="mb-0 fs-6">No records found matching your search criteria.</p>
+            </div>
+        }
+    </div>
+</div>

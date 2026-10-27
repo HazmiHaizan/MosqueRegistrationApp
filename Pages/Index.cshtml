@@ -26,39 +26,44 @@
         <p class="lead-mobile fs-6 fs-md-5 text-white-50 mb-4 px-2">@Localizer["HeroSubtitle"]</p>
         
         @if (!User.Identity.IsAuthenticated)
-            {
-                <!-- Inline flex layout with wrap for small screens -->
-                <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
-                    <a asp-page="/Account/Register" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
-                        <i class="bi bi-person-plus-fill me-2 fs-5"></i>@Localizer["RegisterAccount"]
+        {
+            <!-- Inline flex layout with wrap for small screens -->
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+                <a asp-page="/Account/Register" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
+                    <i class="bi bi-person-plus-fill me-2 fs-5"></i>@Localizer["RegisterAccount"]
+                </a>
+                <a asp-page="/Account/Login" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold text-nowrap d-inline-flex align-items-center justify-content-center">
+                    <i class="bi bi-box-arrow-in-right me-2 fs-5"></i>@Localizer["MemberLogin"]
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="d-flex justify-content-center">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-page="/Admin/Dashboard" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
+                        <i class="bi bi-speedometer2 me-2 fs-5"></i>@Localizer["GoToDashboard"]
                     </a>
-                    <a asp-page="/Account/Login" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold text-nowrap d-inline-flex align-items-center justify-content-center">
-                        <i class="bi bi-box-arrow-in-right me-2 fs-5"></i>@Localizer["MemberLogin"]
+                }
+                else if (User.IsInRole("SuperUser"))
+                {
+                    <a asp-page="/SuperUser/MemberDirectory" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
+                        <i class="bi bi-people me-2 fs-5"></i>@Localizer["GoToDashboard"]
                     </a>
-                </div>
-            }
-            else
-            {
-                <div class="d-flex justify-content-center">
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-page="/Admin/Dashboard" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
-                            <i class="bi bi-speedometer2 me-2 fs-5"></i>@Localizer["GoToDashboard"]
-                        </a>
-                    }
-                    else
-                    {
-                        <a asp-page="/User/Dashboard" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
-                            <i class="bi bi-speedometer2 me-2 fs-5"></i>@Localizer["GoToDashboard"]
-                        </a>
-                    }
-                </div>
-            }
+                }
+                else
+                {
+                    <a asp-page="/User/Dashboard" class="btn btn-gold rounded-pill px-4 py-2 fw-semibold shadow-sm text-nowrap d-inline-flex align-items-center justify-content-center">
+                        <i class="bi bi-speedometer2 me-2 fs-5"></i>@Localizer["GoToDashboard"]
+                    </a>
+                }
+            </div>
+        }
     </div>
 </div>
 
 <!-- Quick Feature Cards -->
-<!-- Grid gap: g-3 on mobile, g-4 on desktop -->
 <div class="row g-3 g-md-4 mb-4">
     <div class="col-12 col-md-4">
         <div class="card card-custom h-100 p-3 p-sm-4 text-center">

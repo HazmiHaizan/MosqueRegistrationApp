@@ -40,4 +40,7 @@
   <data name="FooterRights" xml:space="preserve">
     <value>Mosque Community Management Portal • HH Creations. All rights reserved.</value>
   </data>
+  <data name="MemberDirectory" xml:space="preserve">
+  <value>Member Directory</value>
+</data>
 </root>

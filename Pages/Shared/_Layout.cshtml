@@ -84,6 +84,14 @@
                                     </a>
                                 </li>
                             }
+                            else if (User.IsInRole("SuperUser"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link py-2 px-3 rounded-2 fw-medium" asp-page="/SuperUser/MemberDirectory">
+                                        <i class="bi bi-speedometer2 me-2 me-lg-1"></i>@Localizer["MemberDirectory"]
+                                    </a>
+                                </li>
+                            }
                             else
                             {
                                 <li class="nav-item">

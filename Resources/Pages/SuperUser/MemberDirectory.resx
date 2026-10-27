@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Member Directory</value>
+  </data>
+  <data name="PortalTitle" xml:space="preserve">
+    <value>Member Directory</value>
+  </data>
+  <data name="PortalDescription" xml:space="preserve">
+    <value>View all registered mosque members and their approval status.</value>
+  </data>
+  <data name="TableHeaderTitle" xml:space="preserve">
+    <value>Registered Members</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Search by Name or IC Number...</value>
+  </data>
+  <data name="FilterAllStatuses" xml:space="preserve">
+    <value>All Statuses</value>
+  </data>
+  <data name="FilterPending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="FilterApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="FilterRejected" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="ResetButton" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="TotalLabel" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="ColumnFullName" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="ColumnIcNumber" xml:space="preserve">
+    <value>IC Number</value>
+  </data>
+  <data name="ColumnAddress" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="ColumnMaritalStatus" xml:space="preserve">
+    <value>Marital Status</value>
+  </data>
+  <data name="ColumnResidencyDuration" xml:space="preserve">
+    <value>Residency (Years)</value>
+  </data>
+  <data name="ColumnStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="StatusApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="StatusPending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="StatusRejected" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="NoRecordsFound" xml:space="preserve">
+    <value>No records found matching your search criteria.</value>
+  </data>
+</root>

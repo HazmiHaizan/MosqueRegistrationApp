@@ -120,6 +120,9 @@ namespace MosqueRegistrationApp
                 if (!await roleManager.RoleExistsAsync(Roles.User))
                     await roleManager.CreateAsync(new IdentityRole(Roles.User));
 
+                if (!await roleManager.RoleExistsAsync(Roles.SuperUser))
+                    await roleManager.CreateAsync(new IdentityRole(Roles.SuperUser));
+
                 string adminUser = "admin";
                 if (await userManager.FindByNameAsync(adminUser) == null)
                 {
