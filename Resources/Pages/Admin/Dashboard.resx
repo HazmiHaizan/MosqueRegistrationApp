@@ -118,4 +118,7 @@
 <data name="ConfirmDemote" xml:space="preserve">
   <value>Demote this user to standard user?</value>
 </data>
+<data name="ColumnPhoneNumber" xml:space="preserve">
+  <value>Phone Number</value>
+</data>
 </root>

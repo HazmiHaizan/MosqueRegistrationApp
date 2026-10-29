@@ -68,23 +68,36 @@
                 <table class="table table-custom align-middle mb-0">
                     <thead>
                         <tr>
-                            <th class="ps-3">@Localizer["ColumnFullName"]</th>
-                            <th>@Localizer["ColumnIcNumber"]</th>
-                            <th>@Localizer["ColumnAddress"]</th>
-                            <th>Role / Tier</th>
-                            <th>@Localizer["ColumnProofDocument"]</th>
-                            <th>@Localizer["ColumnStatus"]</th>
-                            <th class="text-end pe-3">@Localizer["ColumnActions"]</th>
+                            <th class="ps-3 text-nowrap">@Localizer["ColumnFullName"]</th>
+                            <th class="text-nowrap">@Localizer["ColumnIcNumber"]</th>
+                            <th class="text-nowrap">@Localizer["ColumnPhoneNumber"]</th>
+                            <th class="text-nowrap">@Localizer["ColumnAddress"]</th>
+                            <th class="text-nowrap">Role / Tier</th>
+                            <th class="text-nowrap">@Localizer["ColumnProofDocument"]</th>
+                            <th class="text-nowrap">@Localizer["ColumnStatus"]</th>
+                            <th class="text-end pe-3 text-nowrap">@Localizer["ColumnActions"]</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.RegisteredUsers)
                         {
                             <tr>
-                                <td class="ps-3 fw-medium">@item.User.FullName</td>
-                                <td><code>@item.User.IcNumber</code></td>
+                                <td class="ps-3 fw-medium text-nowrap">@item.User.FullName</td>
+                                <td class="text-nowrap"><code>@item.User.IcNumber</code></td>
+                                <td class="text-nowrap">
+                                    @if (!string.IsNullOrEmpty(item.User.PhoneNumber))
+                                    {
+                                        <a href="tel:@item.User.PhoneNumber" class="text-decoration-none">
+                                            <i class="bi bi-telephone me-1 text-muted"></i>@item.User.PhoneNumber
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">N/A</span>
+                                    }
+                                </td>
                                 <td><small class="text-muted">@item.User.CurrentAddress</small></td>
-                                <td>
+                                <td class="text-nowrap">
                                     @if (item.IsAdmin)
                                     {
                                         <span class="badge bg-danger text-white">Admin</span>
@@ -98,7 +111,7 @@
                                         <span class="badge bg-secondary">User</span>
                                     }
                                 </td>
-                                <td>
+                                <td class="text-nowrap">
                                     @if (!string.IsNullOrEmpty(item.User.ProofOfResidencyImagePath))
                                     {
                                         <a href="@item.User.ProofOfResidencyImagePath" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">
@@ -106,73 +119,75 @@
                                         </a>
                                     }
                                 </td>
-                                <td>
+                                <td class="text-nowrap">
                                     @if (item.User.ApprovalStatus == "Approved")
                                     {
-                                        <span class="badge-approved"><i class="bi bi-check-circle me-1"></i> @Localizer["StatusApproved"]</span>
+                                        <span class="badge-approved text-nowrap d-inline-flex align-items-center"><i class="bi bi-check-circle me-1"></i> @Localizer["StatusApproved"]</span>
                                     }
                                     else if (item.User.ApprovalStatus == "Rejected")
                                     {
-                                        <span class="badge-rejected"><i class="bi bi-x-circle me-1"></i> @Localizer["StatusRejected"]</span>
+                                        <span class="badge-rejected text-nowrap d-inline-flex align-items-center"><i class="bi bi-x-circle me-1"></i> @Localizer["StatusRejected"]</span>
                                     }
                                     else
                                     {
-                                        <span class="badge-pending"><i class="bi bi-hourglass-split me-1"></i> @Localizer["StatusPending"]</span>
+                                        <span class="badge-pending text-nowrap d-inline-flex align-items-center"><i class="bi bi-hourglass-split me-1"></i> @Localizer["StatusPending"]</span>
                                     }
                                 </td>
                                 <td class="text-end pe-3">
                                     @if (!item.IsAdmin)
                                     {
-                                        <!-- Toggle Super User Button -->
-                                        <form method="post" asp-page-handler="ToggleSuperUser" class="d-inline">
-                                            <input type="hidden" name="userId" value="@item.User.Id" />
-                                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                            @if (item.IsSuperUser)
-                                            {
-                                                <button type="submit" class="btn btn-sm btn-outline-warning rounded-pill px-2.5" onclick="return confirm('Demote this user to standard user?');" title="Demote to User">
-                                                    <i class="bi bi-arrow-down-circle"></i>
-                                                </button>
-                                            }
-                                            else
-                                            {
-                                                <button type="submit" class="btn btn-sm btn-outline-info rounded-pill px-2.5" onclick="return confirm('Upgrade this user to Super User?');" title="Promote to Super User">
-                                                    <i class="bi bi-arrow-up-circle"></i>
-                                                </button>
-                                            }
-                                        </form>
+                                        <div class="d-inline-flex align-items-center justify-content-end gap-1 flex-nowrap">
+                                            <!-- Toggle Super User Button -->
+                                            <form method="post" asp-page-handler="ToggleSuperUser" class="d-inline">
+                                                <input type="hidden" name="userId" value="@item.User.Id" />
+                                                <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                                <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                                @if (item.IsSuperUser)
+                                                {
+                                                    <button type="submit" class="btn btn-sm btn-outline-warning rounded-circle p-1 d-inline-flex align-items-center justify-content-center" style="width: 31px; height: 31px;" onclick="return confirm('Demote this user to standard user?');" title="Demote to User">
+                                                        <i class="bi bi-arrow-down-circle fs-6"></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="submit" class="btn btn-sm btn-outline-info rounded-circle p-1 d-inline-flex align-items-center justify-content-center" style="width: 31px; height: 31px;" onclick="return confirm('Upgrade this user to Super User?');" title="Promote to Super User">
+                                                        <i class="bi bi-arrow-up-circle fs-6"></i>
+                                                    </button>
+                                                }
+                                            </form>
 
-                                        <!-- Approve Button -->
-                                        <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
-                                            <input type="hidden" name="userId" value="@item.User.Id" />
-                                            <input type="hidden" name="status" value="Approved" />
-                                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                            <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">@Localizer["ActionApprove"]</button>
-                                        </form>
+                                            <!-- Approve Button -->
+                                            <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
+                                                <input type="hidden" name="userId" value="@item.User.Id" />
+                                                <input type="hidden" name="status" value="Approved" />
+                                                <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                                <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                                <button type="submit" class="btn btn-sm btn-success rounded-pill px-2.5">@Localizer["ActionApprove"]</button>
+                                            </form>
 
-                                        <!-- Reject Button -->
-                                        <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
-                                            <input type="hidden" name="userId" value="@item.User.Id" />
-                                            <input type="hidden" name="status" value="Rejected" />
-                                            <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
-                                            <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
-                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">@Localizer["ActionReject"]</button>
-                                        </form>
+                                            <!-- Reject Button -->
+                                            <form method="post" asp-page-handler="UpdateStatus" class="d-inline">
+                                                <input type="hidden" name="userId" value="@item.User.Id" />
+                                                <input type="hidden" name="status" value="Rejected" />
+                                                <input type="hidden" name="SearchTerm" value="@Model.SearchTerm" />
+                                                <input type="hidden" name="StatusFilter" value="@Model.StatusFilter" />
+                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-2.5">@Localizer["ActionReject"]</button>
+                                            </form>
 
-                                        <!-- Edit Button -->
-                                        <a asp-page="/Admin/EditUser" asp-route-id="@item.User.Id" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                                            <i class="bi bi-pencil me-1"></i>@Localizer["ActionEdit"]
-                                        </a>
+                                            <!-- Edit Button -->
+                                            <a asp-page="/Admin/EditUser" asp-route-id="@item.User.Id" class="btn btn-sm btn-outline-secondary rounded-pill px-2.5">
+                                                <i class="bi bi-pencil me-1"></i>@Localizer["ActionEdit"]
+                                            </a>
 
-                                        <!-- Delete Button -->
-                                        <a asp-page="/Admin/DeleteUser" asp-route-id="@item.User.Id" class="btn btn-sm btn-danger rounded-pill px-3">
-                                            <i class="bi bi-trash me-1"></i>@Localizer["ActionDelete"]
-                                        </a>
+                                            <!-- Delete Button -->
+                                            <a asp-page="/Admin/DeleteUser" asp-route-id="@item.User.Id" class="btn btn-sm btn-danger rounded-pill px-2.5">
+                                                <i class="bi bi-trash me-1"></i>@Localizer["ActionDelete"]
+                                            </a>
+                                        </div>
                                     }
                                     else
                                     {
-                                        <span class="text-muted small fst-italic">Protected Account</span>
+                                        <span class="text-muted small fst-italic text-nowrap">Protected Account</span>
                                     }
                                 </td>
                             </tr>
@@ -204,19 +219,30 @@
 
                                     @if (item.User.ApprovalStatus == "Approved")
                                     {
-                                        <span class="badge-approved small"><i class="bi bi-check-circle me-1"></i> @Localizer["StatusApproved"]</span>
+                                        <span class="badge-approved small text-nowrap"><i class="bi bi-check-circle me-1"></i> @Localizer["StatusApproved"]</span>
                                     }
                                     else if (item.User.ApprovalStatus == "Rejected")
                                     {
-                                        <span class="badge-rejected small"><i class="bi bi-x-circle me-1"></i> @Localizer["StatusRejected"]</span>
+                                        <span class="badge-rejected small text-nowrap"><i class="bi bi-x-circle me-1"></i> @Localizer["StatusRejected"]</span>
                                     }
                                     else
                                     {
-                                        <span class="badge-pending small"><i class="bi bi-hourglass-split me-1"></i> @Localizer["StatusPending"]</span>
+                                        <span class="badge-pending small text-nowrap"><i class="bi bi-hourglass-split me-1"></i> @Localizer["StatusPending"]</span>
                                     }
                                 </div>
                             </div>
 
+                            <p class="small text-muted mb-1">
+                                <i class="bi bi-telephone me-1"></i>
+                                @if (!string.IsNullOrEmpty(item.User.PhoneNumber))
+                                {
+                                    <a href="tel:@item.User.PhoneNumber" class="text-decoration-none">@item.User.PhoneNumber</a>
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            </p>
                             <p class="small text-muted mb-2"><i class="bi bi-geo-alt me-1"></i>@item.User.CurrentAddress</p>
 
                             @if (!string.IsNullOrEmpty(item.User.ProofOfResidencyImagePath))

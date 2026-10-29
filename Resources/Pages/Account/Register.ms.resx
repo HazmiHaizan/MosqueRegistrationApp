@@ -95,4 +95,7 @@
   <data name="SubmitButton" xml:space="preserve">
     <value>Hantar Pendaftaran</value>
   </data>
+  <data name="LabelPhoneNumber" xml:space="preserve">
+    <value>Nombor Telefon</value>
+  </data>
 </root>

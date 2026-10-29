@@ -118,4 +118,7 @@
 <data name="ConfirmDemote" xml:space="preserve">
   <value>Turunkan taraf pengguna ini kepada Pengguna Biasa?</value>
 </data>
+<data name="ColumnPhoneNumber" xml:space="preserve">
+  <value>Nombor Telefon</value>
+</data>
 </root>

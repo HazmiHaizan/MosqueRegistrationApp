@@ -76,17 +76,23 @@
                     <div class="col-12"><hr class="my-2 text-secondary opacity-25" /></div>
 
                     <div class="col-12 col-md-6">
-                        <label class="text-muted fs-7 text-uppercase fw-semibold d-block mb-1">@Localizer["MaritalStatusLabel"]</label>
-                        <p class="fw-semibold fs-6 mb-0 text-dark">@Model.CurrentUser.MaritalStatus</p>
+                        <label class="text-muted fs-7 text-uppercase fw-semibold d-block mb-1">@Localizer["PhoneNumberLabel"]</label>
+                        <p class="fw-semibold fs-6 mb-0 text-dark">
+                            @(string.IsNullOrEmpty(Model.CurrentUser.PhoneNumber) ? "N/A" : Model.CurrentUser.PhoneNumber)
+                        </p>
                     </div>
                     <div class="col-12 col-md-6 mt-2 mt-md-0">
-                        <label class="text-muted fs-7 text-uppercase fw-semibold d-block mb-1">@Localizer["ResidencyDurationLabel"]</label>
-                        <p class="fw-semibold fs-6 mb-0 text-dark">@string.Format(Localizer["YearsFormat"].Value, Model.CurrentUser.ResidencyDurationYears)</p>
+                        <label class="text-muted fs-7 text-uppercase fw-semibold d-block mb-1">@Localizer["MaritalStatusLabel"]</label>
+                        <p class="fw-semibold fs-6 mb-0 text-dark">@Model.CurrentUser.MaritalStatus</p>
                     </div>
 
                     <div class="col-12"><hr class="my-2 text-secondary opacity-25" /></div>
 
-                    <div class="col-12">
+                    <div class="col-12 col-md-6">
+                        <label class="text-muted fs-7 text-uppercase fw-semibold d-block mb-1">@Localizer["ResidencyDurationLabel"]</label>
+                        <p class="fw-semibold fs-6 mb-0 text-dark">@string.Format(Localizer["YearsFormat"].Value, Model.CurrentUser.ResidencyDurationYears)</p>
+                    </div>
+                    <div class="col-12 col-md-6 mt-2 mt-md-0">
                         <label class="text-muted fs-7 text-uppercase fw-semibold d-block mb-1">@Localizer["ResidentialAddressLabel"]</label>
                         <p class="fw-semibold fs-6 mb-0 text-dark">@Model.CurrentUser.CurrentAddress</p>
                     </div>

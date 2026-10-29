@@ -49,4 +49,7 @@
   <data name="CancelButton" xml:space="preserve">
     <value>Batal</value>
   </data>
+  <data name="LabelPhoneNumber" xml:space="preserve">
+    <value>Nombor Telefon</value>
+  </data>
 </root>

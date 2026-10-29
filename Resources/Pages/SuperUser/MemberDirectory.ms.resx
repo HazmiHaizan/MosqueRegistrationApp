@@ -4,16 +4,19 @@
     <value>Direktori Ahli</value>
   </data>
   <data name="PortalTitle" xml:space="preserve">
-    <value>Direktori Ahli</value>
+    <value>Direktori Ahli &amp; Profil Saya</value>
   </data>
   <data name="PortalDescription" xml:space="preserve">
-    <value>Lihat senarai semua ahli kariah yang berdaftar beserta status kelulusan.</value>
+    <value>Lihat maklumat akaun peribadi anda dan semak ahli kariah masjid yang berdaftar.</value>
   </data>
-  <data name="TableHeaderTitle" xml:space="preserve">
-    <value>Senarai Ahli Berdaftar</value>
+  <data name="ProfileCardHeader" xml:space="preserve">
+    <value>Maklumat Profil Peribadi Saya</value>
+  </data>
+  <data name="SuperUserAccountBadge" xml:space="preserve">
+    <value>Akaun Pengguna Utama</value>
   </data>
   <data name="SearchPlaceholder" xml:space="preserve">
-    <value>Cari mengikut Nama atau No. KP...</value>
+    <value>Cari mengikut Nama, No. KP, atau Telefon...</value>
   </data>
   <data name="FilterAllStatuses" xml:space="preserve">
     <value>Semua Status</value>
@@ -33,6 +36,9 @@
   <data name="ResetButton" xml:space="preserve">
     <value>Set Semula</value>
   </data>
+  <data name="TableHeaderTitle" xml:space="preserve">
+    <value>Direktori Ahli Berdaftar</value>
+  </data>
   <data name="TotalLabel" xml:space="preserve">
     <value>Jumlah</value>
   </data>
@@ -42,8 +48,11 @@
   <data name="ColumnIcNumber" xml:space="preserve">
     <value>No. Kad Pengenalan</value>
   </data>
+  <data name="ColumnPhoneNumber" xml:space="preserve">
+    <value>No. Telefon</value>
+  </data>
   <data name="ColumnAddress" xml:space="preserve">
-    <value>Alamat Semasa</value>
+    <value>Alamat</value>
   </data>
   <data name="ColumnMaritalStatus" xml:space="preserve">
     <value>Status Perkahwinan</value>
@@ -62,6 +71,15 @@
   </data>
   <data name="StatusRejected" xml:space="preserve">
     <value>Ditolak</value>
+  </data>
+  <data name="YearsLabel" xml:space="preserve">
+    <value>tahun</value>
+  </data>
+  <data name="YearsAbbr" xml:space="preserve">
+    <value>thn</value>
+  </data>
+  <data name="YearsResidencyLabel" xml:space="preserve">
+    <value>tahun menetap</value>
   </data>
   <data name="NoRecordsFound" xml:space="preserve">
     <value>Tiada rekod dijumpai mengikut kriteria carian anda.</value>

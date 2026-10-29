@@ -29,6 +29,7 @@ namespace MosqueRegistrationApp.Pages.Admin
             public string Id { get; set; }
             public string FullName { get; set; }
             public string IcNumber { get; set; }
+            public string PhoneNumber { get; set; }
             public string CurrentAddress { get; set; }
             public string MaritalStatus { get; set; }
             public int ResidencyDurationYears { get; set; }
@@ -48,6 +49,7 @@ namespace MosqueRegistrationApp.Pages.Admin
                 Id = user.Id,
                 FullName = user.FullName,
                 IcNumber = user.IcNumber,
+                PhoneNumber = user.PhoneNumber,
                 CurrentAddress = user.CurrentAddress,
                 MaritalStatus = user.MaritalStatus,
                 ResidencyDurationYears = user.ResidencyDurationYears,
@@ -74,6 +76,7 @@ namespace MosqueRegistrationApp.Pages.Admin
 
             user.FullName = Input.FullName;
             user.IcNumber = Input.IcNumber;
+            user.PhoneNumber = Input.PhoneNumber;
             user.CurrentAddress = Input.CurrentAddress;
             user.MaritalStatus = Input.MaritalStatus;
             user.ResidencyDurationYears = Input.ResidencyDurationYears;

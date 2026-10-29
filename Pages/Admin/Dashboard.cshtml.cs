@@ -111,18 +111,19 @@ namespace MosqueRegistrationApp.Pages.Admin
             var users = await GetFilteredUsersQuery().ToListAsync();
 
             var builder = new StringBuilder();
-            builder.AppendLine("Full Name,IC Number,Address,Marital Status,Residency Duration (Years),Status,Username");
+            builder.AppendLine("Full Name,IC Number,Phone Number,Address,Marital Status,Residency Duration (Years),Status,Username");
 
             foreach (var user in users)
             {
                 string fullName = EscapeCsvField(user.FullName);
                 string icNumber = EscapeCsvField(user.IcNumber);
+                string phoneNumber = EscapeCsvField(user.PhoneNumber);
                 string address = EscapeCsvField(user.CurrentAddress);
                 string maritalStatus = EscapeCsvField(user.MaritalStatus);
                 string status = EscapeCsvField(user.ApprovalStatus);
                 string username = EscapeCsvField(user.UserName);
 
-                builder.AppendLine($"{fullName},{icNumber},{address},{maritalStatus},{user.ResidencyDurationYears},{status},{username}");
+                builder.AppendLine($"{fullName},{icNumber},{phoneNumber},{address},{maritalStatus},{user.ResidencyDurationYears},{status},{username}");
             }
 
             byte[] buffer = Encoding.UTF8.GetBytes(builder.ToString());

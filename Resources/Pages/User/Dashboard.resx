@@ -1,47 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-
   <data name="PageTitle" xml:space="preserve">
-    <value>User Dashboard</value>
+    <value>Member Profile Dashboard</value>
   </data>
   <data name="DashboardHeader" xml:space="preserve">
-    <value>My Profile Dashboard</value>
+    <value>Member Profile Portal</value>
   </data>
   <data name="DashboardSubtitle" xml:space="preserve">
-    <value>View your current registration status and submitted details.</value>
+    <value>Review your registered account details and membership status.</value>
   </data>
   <data name="StatusPendingTitle" xml:space="preserve">
-    <value>Registration Pending Review</value>
+    <value>Application Pending Verification</value>
   </data>
   <data name="StatusPendingDesc" xml:space="preserve">
-    <value>Your registration application has been submitted successfully and is currently under review by mosque administrators.</value>
-  </data>
-  <data name="StatusRejectedTitle" xml:space="preserve">
-    <value>Registration Rejected</value>
-  </data>
-  <data name="StatusRejectedDesc" xml:space="preserve">
-    <value>Your application was not approved. Please contact the mosque committee office for further details.</value>
+    <value>Your registration is currently under review by the mosque committee administrator. You will be notified once approved.</value>
   </data>
   <data name="StatusApprovedTitle" xml:space="preserve">
-    <value>Account Active &amp; Approved</value>
+    <value>Registration Approved</value>
   </data>
   <data name="StatusApprovedDesc" xml:space="preserve">
-    <value>You are an officially verified member of this mosque kariah directory.</value>
+    <value>Your account has been officially verified as a registered mosque member.</value>
+  </data>
+  <data name="StatusRejectedTitle" xml:space="preserve">
+    <value>Registration Application Not Approved</value>
+  </data>
+  <data name="StatusRejectedDesc" xml:space="preserve">
+    <value>Your application could not be verified. Please contact the mosque administration office for assistance or resubmit your details.</value>
   </data>
   <data name="PersonalDetailsHeader" xml:space="preserve">
-    <value>Personal Registration Details</value>
+    <value>Personal Profile Details</value>
   </data>
   <data name="FullNameLabel" xml:space="preserve">
     <value>Full Name</value>
@@ -49,25 +36,28 @@
   <data name="IcNumberLabel" xml:space="preserve">
     <value>IC Number</value>
   </data>
+  <data name="PhoneNumberLabel" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
   <data name="MaritalStatusLabel" xml:space="preserve">
     <value>Marital Status</value>
   </data>
   <data name="ResidencyDurationLabel" xml:space="preserve">
-    <value>Residency Duration</value>
+    <value>Duration of Residency</value>
   </data>
   <data name="YearsFormat" xml:space="preserve">
     <value>{0} Years</value>
   </data>
   <data name="ResidentialAddressLabel" xml:space="preserve">
-    <value>Residential Address</value>
+    <value>Current Address</value>
   </data>
   <data name="ProofOfResidencyLabel" xml:space="preserve">
     <value>Proof of Residency Document</value>
   </data>
   <data name="ProofImageAltText" xml:space="preserve">
-    <value>Proof Document</value>
+    <value>Uploaded Proof of Residency</value>
   </data>
   <data name="NoDocumentUploaded" xml:space="preserve">
-    <value>No document uploaded.</value>
+    <value>No proof of residency document has been uploaded.</value>
   </data>
 </root>
