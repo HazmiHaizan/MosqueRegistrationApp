@@ -43,4 +43,7 @@
   <data name="RegisterHereLink" xml:space="preserve">
     <value>Register here</value>
   </data>
+  <data name="ForgotPasswordLink" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
 </root>

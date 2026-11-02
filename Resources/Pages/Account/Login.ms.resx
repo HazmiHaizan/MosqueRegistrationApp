@@ -43,4 +43,7 @@
   <data name="RegisterHereLink" xml:space="preserve">
     <value>Daftar di sini</value>
   </data>
+  <data name="ForgotPasswordLink" xml:space="preserve">
+    <value>Lupa Kata Laluan?</value>
+  </data>
 </root>
