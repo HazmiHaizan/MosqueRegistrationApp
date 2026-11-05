@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MosqueRegistrationApp.Models;
+using MosqueRegistrationApp.Services; // Namespace for IR2StorageService
 
 namespace MosqueRegistrationApp.Pages.Admin
 {
@@ -15,10 +15,14 @@ namespace MosqueRegistrationApp.Pages.Admin
     public class CreateUserModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IR2StorageService _r2Storage; // 1. Add reference to R2 service
 
-        public CreateUserModel(UserManager<ApplicationUser> userManager)
+        public CreateUserModel(
+            UserManager<ApplicationUser> userManager,
+            IR2StorageService r2Storage) // 2. Inject via constructor
         {
             _userManager = userManager;
+            _r2Storage = r2Storage;
         }
 
         [BindProperty]
@@ -54,17 +58,8 @@ namespace MosqueRegistrationApp.Pages.Admin
             string imagePath = null;
             if (Input.ProofOfResidency != null && Input.ProofOfResidency.Length > 0)
             {
-                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-                if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(Input.ProofOfResidency.FileName);
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await Input.ProofOfResidency.CopyToAsync(fileStream);
-                }
-                imagePath = "/uploads/" + uniqueFileName;
+                // 3. Upload directly to Cloudflare R2 instead of local wwwroot/uploads
+                imagePath = await _r2Storage.UploadFileAsync(Input.ProofOfResidency);
             }
 
             var user = new ApplicationUser
@@ -76,7 +71,7 @@ namespace MosqueRegistrationApp.Pages.Admin
                 CurrentAddress = Input.CurrentAddress,
                 MaritalStatus = Input.MaritalStatus,
                 ResidencyDurationYears = Input.ResidencyDurationYears,
-                ProofOfResidencyImagePath = imagePath
+                ProofOfResidencyImagePath = imagePath // Stores the secure public R2 URL string
             };
 
             var result = await _userManager.CreateAsync(user, Input.Password);

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MosqueRegistrationApp.Models;
@@ -15,10 +16,18 @@ namespace MosqueRegistrationApp.Data
         {
             base.OnModelCreating(builder);
 
-            // Enforce unique index constraint on IC Number at the database level
+            // Enforce unique constraint on IC Number
             builder.Entity<ApplicationUser>()
                 .HasIndex(u => u.IcNumber)
                 .IsUnique();
+
+            // Make optional Identity columns nullable in PostgreSQL
+            builder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(u => u.PhoneNumber).IsRequired(false);
+                entity.Property(u => u.Email).IsRequired(false);
+                entity.Property(u => u.NormalizedEmail).IsRequired(false);
+            });
         }
     }
 }

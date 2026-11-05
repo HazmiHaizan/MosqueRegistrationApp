@@ -8,9 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MosqueRegistrationApp.Data;
 using MosqueRegistrationApp.Models;
+using MosqueRegistrationApp.Services;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
+
 
 namespace MosqueRegistrationApp
 {
@@ -20,9 +22,13 @@ namespace MosqueRegistrationApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            options.UseNpgsql(connectionString));
+
+            builder.Services.AddScoped<IR2StorageService, R2StorageService>();
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {

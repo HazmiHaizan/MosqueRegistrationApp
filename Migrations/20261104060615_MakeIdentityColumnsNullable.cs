@@ -5,40 +5,32 @@
 namespace MosqueRegistrationApp.Migrations
 {
     /// <inheritdoc />
-    public partial class AddUniqueIndexToIcNumber : Migration
+    public partial class MakeIdentityColumnsNullable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "IcNumber",
+                name: "PhoneNumber",
                 table: "AspNetUsers",
-                type: "nvarchar(450)",
-                nullable: false,
+                type: "text",
+                nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_IcNumber",
-                table: "AspNetUsers",
-                column: "IcNumber",
-                unique: true);
+                oldType: "text");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_AspNetUsers_IcNumber",
-                table: "AspNetUsers");
-
             migrationBuilder.AlterColumn<string>(
-                name: "IcNumber",
+                name: "PhoneNumber",
                 table: "AspNetUsers",
-                type: "nvarchar(max)",
+                type: "text",
                 nullable: false,
+                defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
+                oldType: "text",
+                oldNullable: true);
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MosqueRegistrationApp.Models;
+using MosqueRegistrationApp.Services; // Namespace for IR2StorageService
 
 namespace MosqueRegistrationApp.Pages.Admin
 {
@@ -15,10 +15,14 @@ namespace MosqueRegistrationApp.Pages.Admin
     public class EditUserModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IR2StorageService _r2Storage; // 1. Add reference to R2 service
 
-        public EditUserModel(UserManager<ApplicationUser> userManager)
+        public EditUserModel(
+            UserManager<ApplicationUser> userManager,
+            IR2StorageService r2Storage) // 2. Inject via constructor
         {
             _userManager = userManager;
+            _r2Storage = r2Storage;
         }
 
         [BindProperty]
@@ -83,17 +87,8 @@ namespace MosqueRegistrationApp.Pages.Admin
 
             if (Input.NewProofOfResidency != null && Input.NewProofOfResidency.Length > 0)
             {
-                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-                if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
-
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(Input.NewProofOfResidency.FileName);
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await Input.NewProofOfResidency.CopyToAsync(fileStream);
-                }
-                user.ProofOfResidencyImagePath = "/uploads/" + uniqueFileName;
+                // 3. Upload directly to Cloudflare R2 instead of local wwwroot/uploads
+                user.ProofOfResidencyImagePath = await _r2Storage.UploadFileAsync(Input.NewProofOfResidency);
             }
 
             var result = await _userManager.UpdateAsync(user);
