@@ -31,6 +31,9 @@ namespace MosqueRegistrationApp
                                 ?? Environment.GetEnvironmentVariable("DATABASE_URL")?.Trim('"')?.Trim('\'')?.Trim();
             }
 
+            // Diagnostic log to reveal what Render is actually passing
+            Console.WriteLine($"[RENDER DEBUG] Connection String Check: {(string.IsNullOrEmpty(connectionString) ? "MISSING / EMPTY" : "Loaded Successfully (Length: " + connectionString.Length + ")")}");
+
             if (string.IsNullOrEmpty(connectionString))
             {
                 throw new InvalidOperationException("Critical Error: DefaultConnection string is missing or empty in the cloud environment.");
