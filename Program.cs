@@ -22,11 +22,25 @@ namespace MosqueRegistrationApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            // Fallback if Render's environment mapping needs direct raw string reading
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") 
+                                ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+            }
+
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("Critical Error: DefaultConnection string is missing or empty in the cloud environment.");
+            }
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(connectionString));
+                options.UseNpgsql(connectionString));
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(connectionString));
 
             builder.Services.AddScoped<IR2StorageService, R2StorageService>();
 
