@@ -38,18 +38,9 @@ namespace MosqueRegistrationApp
                 throw new InvalidOperationException("Critical Error: DefaultConnection string is missing or empty in the cloud environment.");
             }
 
-            // 2. Convert Render URL format (postgresql://...) to Npgsql keyword format to prevent index 0 parsing errors
-            string npgsqlConnectionString = connectionString;
-            if (connectionString.StartsWith("postgres://") || connectionString.StartsWith("postgresql://"))
-            {
-                var uri = new Uri(connectionString);
-                var userInfo = uri.UserInfo.Split(':');
-                npgsqlConnectionString = $"Server={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};User Id={userInfo[0]};Password={userInfo[1]};SslMode=Require;Trust Server Certificate=true;";
-            }
-
-            // 3. Register database context using the safe connection string
+            // 2. Register database context directly using Npgsql (Npgsql natively understands postgresql:// URLs)
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(npgsqlConnectionString));
+                options.UseNpgsql(connectionString));
 
             builder.Services.AddScoped<IR2StorageService, R2StorageService>();
 
