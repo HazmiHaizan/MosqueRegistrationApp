@@ -22,7 +22,7 @@ namespace MosqueRegistrationApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // 1. Fetch connection string and forcefully strip any stray quotes or whitespace
+            // 1. Fetch connection string and strip any accidental quotes or whitespace
             var rawConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
                                    ?? Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") 
                                    ?? Environment.GetEnvironmentVariable("DATABASE_URL") 
@@ -30,14 +30,22 @@ namespace MosqueRegistrationApp
 
             var connectionString = rawConnectionString.Trim().Trim('"').Trim('\'');
 
-            Console.WriteLine($"[RENDER DEBUG] Cleaned Connection String Length: {connectionString.Length}");
+            // 2. Convert Render's postgresql:// URL format into Npgsql keyword format
+            if (connectionString.StartsWith("postgres://") || connectionString.StartsWith("postgresql://"))
+            {
+                var uri = new Uri(connectionString);
+                var userInfo = uri.UserInfo.Split(':');
+                connectionString = $"Host={uri.Host};Port={(uri.Port > 0 ? uri.Port : 5432)};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true;";
+            }
+
+            Console.WriteLine($"[RENDER DEBUG] Converted Connection String Length: {connectionString.Length}");
 
             if (string.IsNullOrEmpty(connectionString))
             {
                 throw new InvalidOperationException("Critical Error: DefaultConnection string is missing or empty.");
             }
 
-            // 2. Register database context cleanly
+            // 3. Register database context cleanly
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
