@@ -22,23 +22,22 @@ namespace MosqueRegistrationApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // 1. Fetch and trim connection string
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Trim('"')?.Trim('\'')?.Trim();
+            // 1. Fetch connection string and forcefully strip any stray quotes or whitespace
+            var rawConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+                                   ?? Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") 
+                                   ?? Environment.GetEnvironmentVariable("DATABASE_URL") 
+                                   ?? string.Empty;
+
+            var connectionString = rawConnectionString.Trim().Trim('"').Trim('\'');
+
+            Console.WriteLine($"[RENDER DEBUG] Cleaned Connection String Length: {connectionString.Length}");
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")?.Trim('"')?.Trim('\'')?.Trim()
-                                ?? Environment.GetEnvironmentVariable("DATABASE_URL")?.Trim('"')?.Trim('\'')?.Trim();
+                throw new InvalidOperationException("Critical Error: DefaultConnection string is missing or empty.");
             }
 
-            Console.WriteLine($"[RENDER DEBUG] Connection String Check: {(string.IsNullOrEmpty(connectionString) ? "MISSING / EMPTY" : "Loaded Successfully (Length: " + connectionString.Length + ")")}");
-
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new InvalidOperationException("Critical Error: DefaultConnection string is missing or empty in the cloud environment.");
-            }
-
-            // 2. Register database context directly using Npgsql (Npgsql natively understands postgresql:// URLs)
+            // 2. Register database context cleanly
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
