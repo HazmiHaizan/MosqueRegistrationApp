@@ -1,4 +1,3 @@
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using MosqueRegistrationApp.Models;
+using MosqueRegistrationApp.Services; // Ensure namespace matches your IR2StorageService
 
 namespace MosqueRegistrationApp.Pages.Admin
 {
@@ -14,13 +14,16 @@ namespace MosqueRegistrationApp.Pages.Admin
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IStringLocalizer<DeleteUserModel> _localizer;
+        private readonly IR2StorageService _r2Storage; // 1. Add R2 service reference
 
         public DeleteUserModel(
             UserManager<ApplicationUser> userManager,
-            IStringLocalizer<DeleteUserModel> localizer)
+            IStringLocalizer<DeleteUserModel> localizer,
+            IR2StorageService r2Storage) // 2. Inject via constructor
         {
             _userManager = userManager;
             _localizer = localizer;
+            _r2Storage = r2Storage;
         }
 
         public ApplicationUser UserToDelete { get; set; }
@@ -59,14 +62,10 @@ namespace MosqueRegistrationApp.Pages.Admin
             var user = await _userManager.FindByIdAsync(id);
             if (user == null) return NotFound();
 
-            // 1. Delete associated proof of residency file from wwwroot if it exists
+            // 1. Delete associated proof of residency file from Cloudflare R2 bucket if it exists
             if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
             {
-                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.ProofOfResidencyImagePath.TrimStart('/'));
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
+                await _r2Storage.DeleteFileAsync(user.ProofOfResidencyImagePath);
             }
 
             // 2. Delete user account from ASP.NET Core Identity
