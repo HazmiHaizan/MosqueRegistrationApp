@@ -21,12 +21,31 @@ namespace MosqueRegistrationApp.Services
 
         public R2StorageService(IConfiguration configuration)
         {
-            _bucketName = configuration["CloudflareR2:BucketName"];
-            _publicUrl = configuration["CloudflareR2:PublicUrl"]?.TrimEnd('/');
+            // Read from configuration or fallback directly to Render environment variables
+            _bucketName = configuration["CloudflareR2__BucketName"] 
+                       ?? configuration["CloudflareR2:BucketName"] 
+                       ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_BUCKET_NAME");
 
-            var accessKey = configuration["CloudflareR2:AccessKey"];
-            var secretKey = configuration["CloudflareR2:SecretKey"];
-            var serviceUrl = configuration["CloudflareR2:ServiceUrl"];
+            _publicUrl = (configuration["CloudflareR2__PublicUrl"] 
+                       ?? configuration["CloudflareR2:PublicUrl"] 
+                       ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_PUBLIC_URL"))?.TrimEnd('/');
+
+            var accessKey = configuration["CloudflareR2__AccessKey"] 
+                         ?? configuration["CloudflareR2:AccessKey"] 
+                         ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_ACCESS_KEY");
+
+            var secretKey = configuration["CloudflareR2__SecretKey"] 
+                         ?? configuration["CloudflareR2:SecretKey"] 
+                         ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_SECRET_KEY");
+
+            var serviceUrl = configuration["CloudflareR2__ServiceUrl"] 
+                          ?? configuration["CloudflareR2:ServiceUrl"] 
+                          ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_SERVICE_URL");
+
+            if (string.IsNullOrEmpty(serviceUrl))
+            {
+                throw new InvalidOperationException("R2 ServiceURL is missing. Please check your Render environment variables.");
+            }
 
             var config = new AmazonS3Config
             {
@@ -54,7 +73,6 @@ namespace MosqueRegistrationApp.Services
                     Key = fileName,
                     BucketName = _bucketName,
                     ContentType = file.ContentType,
-                    // CORRECT LOCATION: Disable payload signing on the upload request for Cloudflare R2 compatibility
                     DisablePayloadSigning = true 
                 };
 
