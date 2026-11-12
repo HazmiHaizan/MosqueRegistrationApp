@@ -2,6 +2,7 @@ using Amazon.S3;
 using Amazon.S3.Transfer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -18,10 +19,12 @@ namespace MosqueRegistrationApp.Services
         private readonly string _bucketName;
         private readonly string _publicUrl;
         private readonly IAmazonS3 _s3Client;
+        private readonly ILogger<R2StorageService> _logger;
 
-        public R2StorageService(IConfiguration configuration)
+        public R2StorageService(IConfiguration configuration, ILogger<R2StorageService> logger)
         {
-            // Read from configuration or fallback directly to Render environment variables
+            _logger = logger;
+
             _bucketName = configuration["CloudflareR2__BucketName"] 
                        ?? configuration["CloudflareR2:BucketName"] 
                        ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_BUCKET_NAME");
@@ -42,9 +45,11 @@ namespace MosqueRegistrationApp.Services
                           ?? configuration["CloudflareR2:ServiceUrl"] 
                           ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_SERVICE_URL");
 
+            _logger.LogInformation("[R2 Init] ServiceURL length: {Length}, Bucket: {Bucket}", serviceUrl?.Length ?? 0, _bucketName);
+
             if (string.IsNullOrEmpty(serviceUrl))
             {
-                throw new InvalidOperationException("R2 ServiceURL is missing. Please check your Render environment variables.");
+                throw new InvalidOperationException("Critical: R2 ServiceURL is null or empty. Check Render Environment variables.");
             }
 
             var config = new AmazonS3Config
