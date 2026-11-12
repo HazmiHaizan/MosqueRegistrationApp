@@ -1,4 +1,5 @@
 using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ namespace MosqueRegistrationApp.Services
     public interface IR2StorageService
     {
         Task<string> UploadFileAsync(IFormFile file);
+        Task DeleteFileAsync(string fileUrl); // MUST be declared here so DeleteUser can call it
     }
 
     public class R2StorageService : IR2StorageService
@@ -25,13 +27,9 @@ namespace MosqueRegistrationApp.Services
         {
             _logger = logger;
 
-            _bucketName = configuration["CloudflareR2__BucketName"] 
-                       ?? configuration["CloudflareR2:BucketName"] 
-                       ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_BUCKET_NAME");
-
-            _publicUrl = (configuration["CloudflareR2__PublicUrl"] 
-                       ?? configuration["CloudflareR2:PublicUrl"] 
-                       ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_PUBLIC_URL"))?.TrimEnd('/');
+            var serviceUrl = configuration["CloudflareR2__ServiceUrl"] 
+                          ?? configuration["CloudflareR2:ServiceUrl"] 
+                          ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_SERVICE_URL");
 
             var accessKey = configuration["CloudflareR2__AccessKey"] 
                          ?? configuration["CloudflareR2:AccessKey"] 
@@ -41,15 +39,23 @@ namespace MosqueRegistrationApp.Services
                          ?? configuration["CloudflareR2:SecretKey"] 
                          ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_SECRET_KEY");
 
-            var serviceUrl = configuration["CloudflareR2__ServiceUrl"] 
-                          ?? configuration["CloudflareR2:ServiceUrl"] 
-                          ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_SERVICE_URL");
+            _bucketName = configuration["CloudflareR2__BucketName"] 
+                       ?? configuration["CloudflareR2:BucketName"] 
+                       ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_BUCKET_NAME") 
+                       ?? "maes24-proofs";
 
-            _logger.LogInformation("[R2 Init] ServiceURL length: {Length}, Bucket: {Bucket}", serviceUrl?.Length ?? 0, _bucketName);
+            _publicUrl = (configuration["CloudflareR2__PublicUrl"] 
+                       ?? configuration["CloudflareR2:PublicUrl"] 
+                       ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_PUBLIC_URL"))?.TrimEnd('/');
+
+            _logger.LogWarning("================ R2 DIAGNOSTICS ================");
+            _logger.LogWarning("ServiceUrl resolved: {Url}", string.IsNullOrEmpty(serviceUrl) ? "MISSING / NULL" : serviceUrl);
+            _logger.LogWarning("BucketName resolved: {Bucket}", _bucketName);
+            _logger.LogWarning("================================================");
 
             if (string.IsNullOrEmpty(serviceUrl))
             {
-                throw new InvalidOperationException("Critical: R2 ServiceURL is null or empty. Check Render Environment variables.");
+                throw new InvalidOperationException("CRITICAL: R2 ServiceURL environment variable is missing on Render!");
             }
 
             var config = new AmazonS3Config
@@ -85,6 +91,34 @@ namespace MosqueRegistrationApp.Services
             }
 
             return $"{_publicUrl}/{fileName}";
+        }
+
+        public async Task DeleteFileAsync(string fileUrl)
+        {
+            if (string.IsNullOrEmpty(fileUrl))
+                return;
+
+            try
+            {
+                var uri = new Uri(fileUrl);
+                var objectKey = Path.GetFileName(uri.AbsolutePath);
+
+                if (!string.IsNullOrEmpty(objectKey))
+                {
+                    var deleteRequest = new DeleteObjectRequest
+                    {
+                        BucketName = _bucketName,
+                        Key = objectKey
+                    };
+
+                    await _s3Client.DeleteObjectAsync(deleteRequest);
+                    _logger.LogInformation("Successfully deleted file {Key} from R2 bucket {Bucket}", objectKey, _bucketName);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to delete file from R2 bucket for URL: {Url}", fileUrl);
+            }
         }
     }
 }
