@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using MosqueRegistrationApp.Models;
-using MosqueRegistrationApp.Services; // Ensure namespace matches your IR2StorageService
+using MosqueRegistrationApp.Services;
 
 namespace MosqueRegistrationApp.Pages.Admin
 {
@@ -14,12 +14,12 @@ namespace MosqueRegistrationApp.Pages.Admin
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IStringLocalizer<DeleteUserModel> _localizer;
-        private readonly IR2StorageService _r2Storage; // 1. Add R2 service reference
+        private readonly IR2StorageService _r2Storage;
 
         public DeleteUserModel(
             UserManager<ApplicationUser> userManager,
             IStringLocalizer<DeleteUserModel> localizer,
-            IR2StorageService r2Storage) // 2. Inject via constructor
+            IR2StorageService r2Storage)
         {
             _userManager = userManager;
             _localizer = localizer;
@@ -62,13 +62,13 @@ namespace MosqueRegistrationApp.Pages.Admin
             var user = await _userManager.FindByIdAsync(id);
             if (user == null) return NotFound();
 
-            // 1. Delete associated proof of residency file from Cloudflare R2 bucket if it exists
+            // Delete associated proof of residency file from Cloudflare R2 bucket if it exists
             if (!string.IsNullOrEmpty(user.ProofOfResidencyImagePath))
             {
                 await _r2Storage.DeleteFileAsync(user.ProofOfResidencyImagePath);
             }
 
-            // 2. Delete user account from ASP.NET Core Identity
+            // Delete user account from ASP.NET Core Identity
             var result = await _userManager.DeleteAsync(user);
             if (result.Succeeded)
             {

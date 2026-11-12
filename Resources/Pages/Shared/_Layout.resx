@@ -43,4 +43,7 @@
   <data name="MemberDirectory" xml:space="preserve">
   <value>Member Directory</value>
 </data>
+<data name="FooterPrivacyNotice" xml:space="preserve">
+  <value>Privacy Notice / PDPA</value>
+</data>
 </root>

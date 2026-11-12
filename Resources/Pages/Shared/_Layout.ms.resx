@@ -43,4 +43,7 @@
   <data name="MemberDirectory" xml:space="preserve">
   <value>Direktori Ahli</value>
 </data>
+<data name="FooterPrivacyNotice" xml:space="preserve">
+  <value>Notis Privasi / PDPA</value>
+</data>
 </root>

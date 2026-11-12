@@ -91,6 +91,16 @@
                         </div>
                     </div>
 
+                    <!-- PDPA Consent Checkbox -->
+                    <div class="form-check mb-4">
+                        <input asp-for="Input.AcceptPdpa" class="form-check-input" type="checkbox" id="pdpaCheck" />
+                        <label class="form-check-label fs-7 text-secondary" for="pdpaCheck">
+                            @Localizer["PdpaConsentText"] <a href="/Privacy" target="_blank" class="text-decoration-underline">@Localizer["PrivacyNoticeLink"]</a>.
+                        </label>
+                        <div class="w-100"></div>
+                        <span asp-validation-for="Input.AcceptPdpa" class="text-danger small"></span>
+                    </div>
+
                     <!-- Full width touch-friendly CTA button -->
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-gold btn-lg py-2.5 fw-bold text-uppercase shadow-sm fs-6">

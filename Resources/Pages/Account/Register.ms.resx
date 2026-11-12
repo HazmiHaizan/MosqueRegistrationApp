@@ -98,4 +98,13 @@
   <data name="LabelPhoneNumber" xml:space="preserve">
     <value>Nombor Telefon</value>
   </data>
+  <data name="PdpaConsentText" xml:space="preserve">
+    <value>Saya bersetuju dengan pemprosesan data peribadi saya untuk pengesahan keahlian masjid mengikut</value>
+  </data>
+  <data name="PrivacyNoticeLink" xml:space="preserve">
+    <value>Notis Privasi PDPA</value>
+  </data>
+  <data name="PdpaErrorRequired" xml:space="preserve">
+    <value>Anda mesti bersetuju dengan Notis Privasi PDPA untuk mendaftar.</value>
+  </data>
 </root>

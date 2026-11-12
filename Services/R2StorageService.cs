@@ -13,7 +13,7 @@ namespace MosqueRegistrationApp.Services
     public interface IR2StorageService
     {
         Task<string> UploadFileAsync(IFormFile file);
-        Task DeleteFileAsync(string fileUrl); // MUST be declared here so DeleteUser can call it
+        Task DeleteFileAsync(string fileUrl);
     }
 
     public class R2StorageService : IR2StorageService
@@ -48,14 +48,9 @@ namespace MosqueRegistrationApp.Services
                        ?? configuration["CloudflareR2:PublicUrl"] 
                        ?? Environment.GetEnvironmentVariable("CLOUDFLARE_R2_PUBLIC_URL"))?.TrimEnd('/');
 
-            _logger.LogWarning("================ R2 DIAGNOSTICS ================");
-            _logger.LogWarning("ServiceUrl resolved: {Url}", string.IsNullOrEmpty(serviceUrl) ? "MISSING / NULL" : serviceUrl);
-            _logger.LogWarning("BucketName resolved: {Bucket}", _bucketName);
-            _logger.LogWarning("================================================");
-
             if (string.IsNullOrEmpty(serviceUrl))
             {
-                throw new InvalidOperationException("CRITICAL: R2 ServiceURL environment variable is missing on Render!");
+                throw new InvalidOperationException("CRITICAL: R2 ServiceURL environment variable is missing!");
             }
 
             var config = new AmazonS3Config

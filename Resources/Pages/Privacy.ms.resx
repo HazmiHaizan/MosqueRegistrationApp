@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Notis Privasi / Privacy Notice</value>
+  </data>
+  <data name="HeaderTitle" xml:space="preserve">
+    <value>Notis Privasi PDPA</value>
+  </data>
+  <data name="HeaderSubtitle" xml:space="preserve">
+    <value>Pematuhan Akta Perlindungan Data Peribadi 2010</value>
+  </data>
+
+  <data name="Section1Title" xml:space="preserve">
+    <value>1. Pengenalan &amp; Komitmen</value>
+  </data>
+  <data name="Section1BodyEn" xml:space="preserve">
+    <value>In compliance with the Personal Data Protection Act 2010 (PDPA) of Malaysia, MAES24 is committed to protecting your personal data and ensuring your privacy is respected.</value>
+  </data>
+  <data name="Section1BodyMs" xml:space="preserve">
+    <value>Berdasarkan Akta Perlindungan Data Peribadi 2010 (PDPA) Malaysia, MAES24 komited melindungi data peribadi anda dan memastikan privasi anda dihormati.</value>
+  </data>
+
+  <data name="Section2Title" xml:space="preserve">
+    <value>2. Maklumat Yang Kami Kumpul</value>
+  </data>
+  <data name="Section2BodyEn" xml:space="preserve">
+    <value>We collect personal identifiers including your Full Name, IC Number, Phone Number, Residential Address, and residency verification documents during registration.</value>
+  </data>
+  <data name="Section2BodyMs" xml:space="preserve">
+    <value>Kami mengumpul butiran peribadi termasuk Nama Penuh, Nombor IC, Nombor Telefon, Alamat Kediaman, dan dokumen pengesahan semasa pendaftaran.</value>
+  </data>
+
+  <data name="Section3Title" xml:space="preserve">
+    <value>3. Tujuan Pemprosesan Data</value>
+  </data>
+  <data name="Section3BodyEn" xml:space="preserve">
+    <value>Your information is used strictly for mosque membership verification, community administration, and internal records managed by authorized committee members.</value>
+  </data>
+  <data name="Section3BodyMs" xml:space="preserve">
+    <value>Maklumat anda digunakan khusus untuk pengesahan keahlian masjid, pentadbiran komuniti, dan rekod dalaman oleh Ahli Jawatankuasa yang sah.</value>
+  </data>
+
+  <data name="Section4Title" xml:space="preserve">
+    <value>4. Keselamatan Data</value>
+  </data>
+  <data name="Section4BodyEn" xml:space="preserve">
+    <value>All data is securely stored in cloud infrastructure and encrypted databases with strict role-based access control preventing unauthorized exposure.</value>
+  </data>
+  <data name="Section4BodyMs" xml:space="preserve">
+    <value>Semua data disimpan dengan selamat di infrastruktur awan dan pangkalan data tersulit dengan kawalan akses ketat.</value>
+  </data>
+
+  <data name="BackButton" xml:space="preserve">
+    <value>Kembali / Go Back</value>
+  </data>
+</root>

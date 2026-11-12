@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MosqueRegistrationApp.Models;
+using Microsoft.AspNetCore.Mvc.Localization;
 using MosqueRegistrationApp.Services; // Ensure this matches your namespace for IR2StorageService
+using System.ComponentModel.DataAnnotations;
 
 namespace MosqueRegistrationApp.Pages.Account
 {
@@ -40,6 +42,9 @@ namespace MosqueRegistrationApp.Pages.Account
             public string MaritalStatus { get; set; }
             public int ResidencyDurationYears { get; set; }
             public IFormFile ProofOfResidency { get; set; }
+
+            [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree to the PDPA Privacy Notice to register.")]
+            public bool AcceptPdpa { get; set; }
         }
 
         public void OnGet() { }
